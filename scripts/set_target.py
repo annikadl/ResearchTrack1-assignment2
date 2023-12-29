@@ -13,6 +13,25 @@ from std_srvs.srv import *
 import time
 from assignment_2_2023.msg import Vel
 from assignment_2_2023.msg import ParametersAction, ParametersGoal, ParametersResult
+from std_msgs.msg import String
+
+def publisher_node():
+    # Create a publisher
+    pub = rospy.Publisher('pub_position_velocity', String, queue_size=10) 
+    
+    # Initialize the ROS node
+    #rospy.init_node('publisher_node', anonymous=True)
+
+    # Set the publishing rate (e.g., 1 Hz)
+    rate = rospy.Rate(1)  # 1 Hz
+    
+    while not rospy.is_shutdown():
+    	my_pos_and_vel = Vel()
+    	my_pos_and_vel_str = "My position and velocity is %s" % str(my_pos_and_vel)
+    	rospy.loginfo(my_pos_and_vel_str)
+    	pub.publish(my_pos_and_vel_str)
+    	rate.sleep()
+
 
 
 def handle_parameters_server(goal):
@@ -29,8 +48,6 @@ def handle_parameters_server(goal):
 
     # Create an action result
     result = ParametersResult()
-    # result.final_x = 42.0  # Replace with the actual final position x
-    # result.final_y = 24.0  # Replace with the actual final position y
     rospy.loginfo("Goal reached? Success = %s", str(result))
 
 
@@ -48,6 +65,8 @@ def parameters_server_main():
     # Print a message indicating the server is ready
     rospy.loginfo("Parameters Action Server is ready.")
     
+    publisher_node()
+    
     
     
    # handle_parameters_server(goal)
@@ -59,7 +78,9 @@ def parameters_server_main():
     
     
 if __name__ == '__main__':
+    #publisher_node()
     parameters_server_main()
+    
 
 
 

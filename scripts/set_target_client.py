@@ -12,18 +12,21 @@ from tf import transformations
 from std_srvs.srv import *
 import time
 from assignment_2_2023.msg import Vel
-from assignment_2_2023.msg import ParametersAction, ParametersGoal, ParametersResult
+from assignment_2_2023.msg import PlanningAction
+from assignment_2_2023.msg import PlanningAction, PlanningGoal, PlanningResult
+from std_msgs.msg import String
+
 
 ####### CLIENT
-	
 def parameters_client_main():
     rospy.init_node('set_target_client')
 
     # Create an action client
-    client = actionlib.SimpleActionClient('parameters', ParametersAction)
+    client = actionlib.SimpleActionClient('/reaching_goal', assignment_2_2023.msg.PlanningAction)
     client.wait_for_server()
     
     while not rospy.is_shutdown():
+        #subscriber_node()
         print("Do you want to set or cancel the goal?")
         # TODO: handle non-char input
         # try:
@@ -32,10 +35,10 @@ def parameters_client_main():
         #     rospy.logerr("Invalid input. Please enter a character.")
 
         # Get the actual goal
-        goal = ParametersGoal()
-        goal.des_x = rospy.get_param('/des_pos_x')
-        goal.des_y = rospy.get_param('/des_pos_y')
-        rospy.loginfo("Actual goal: des_x = %f, des_y = %f", goal.des_x, goal.des_y)
+        goal = assignment_2_2023.msg.PlanningGoal()
+        goal.target_pose.pose.position.x = rospy.get_param('/des_pos_x')
+        goal.target_pose.pose.position.y = rospy.get_param('/des_pos_y')
+        rospy.loginfo("Actual goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x , goal.target_pose.pose.position.y )
 
         # Modify goal from keyboard
         if command == 'y':
@@ -51,8 +54,8 @@ def parameters_client_main():
             rospy.set_param('/des_pos_x', input_x)
             rospy.set_param('/des_pos_y', input_y)
 
-            goal.des_x = input_x
-            goal.des_y = input_y
+            goal.target_pose.pose.position.x = input_x
+            goal.target_pose.pose.position.y = input_y
 
         # Goal isn't modified
         if command == 'n':
@@ -63,11 +66,26 @@ def parameters_client_main():
             rospy.set_param('/des_pos_x', 0.0)
             rospy.set_param('/des_pos_y', 0.0)
 
-        rospy.loginfo("Received goal: des_x = %f, des_y = %f", goal.des_x, goal.des_y)
-        
+        rospy.loginfo("Received goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
+
         client.send_goal(goal)
-        #rospy.spin()
+        
+        
+def main():
+	# Global pub
+    	#global pub
+    
+    	# PUBLISHER: send a message which contains two parameters (velocity and position)
+    	#pub = rospy.Publisher("/pos_vel", Vel, queue_size = 1)
+    
+    	# SUBSCRIBER: get from "Odom" two parameters (velocity and position)
+    	#sub_from_Odom=rospy.Subscriber("/odom",Odometry,publisher_node)
+    
+    	# Calling the function client
+    	parameters_client_main()
+	        
 
 if __name__ == '__main__':
-    parameters_client_main()
+	main()
+    
 
