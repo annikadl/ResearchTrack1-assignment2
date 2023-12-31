@@ -81,5 +81,6 @@ Several improvements are possible:
 * improving the user interface by:
     * making it more attractive;
     * making it possible to also call the service with a specific command
+* neither there is a check on the input type nor a different input type error is handled.
 
 
