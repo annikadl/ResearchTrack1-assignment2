@@ -21,17 +21,13 @@ The playground is represented by a squared arena in which the robot can move. Be
 ## Already implemented nodes
 Some nodes were already implemented by the Professor of the course. These nodes aim to plan the motion of the robot.
 
-The first node `reading_laser.py` processes the output of the sensors, a necessary step to correctly move the robot around the arena. It converts the 720 readings contained inside the LaserScan msg into five distinct readings. Each reading is the minimum distance measured on a sector of 60 degrees.
-
-Node `obstacle_avoidance.py` processes data to detect obstacles and avoid them: if an obstacle is detected on the front, the node makes the robot rotate until there are no obstacles perceived. The same behaviour is implemented for obstacles on the right and the left. **CHECK PERCHé POTREBBE ESSERE STATA INGLOABATA DA BUSAS**
-
-Node `wall_follow_service.py` is used to let the robot follow a wall, for instance, to circumnavigate it.
+Node `wall_follow_service.py` is used to let the robot follow a wall, for instance, to circumnavigate it. This node also processes data to detect obstacles and avoid them: if an obstacle is detected on the front, the node makes the robot rotate until there are no obstacles perceived. The same behaviour is implemented for obstacles on the right and the left.
 
 Node `go_to_point_service_service.py` implements a finite state machine that controls whether the robot behaves correctly and lets it move towards a specified point. It also checks if and when the robot successfully reaches the goal.
 
-Node `bug_as.py` ...
+Node `bug_as.py` is an action server used to decide the robot's behaviour according to a function `change_state`, responsible for switching the robot states. This function lets activate or deactivate specific behaviour such as `go_to_point` or `wall_following`. Besides, it imports messages and services, also from the other nodes, to facilitate communication between different components of the simulation system. These include messages for laser scan data, odometry information, twist commands for velocity control, and services for switching between navigation modes. Callback functions are implemented to process data, updating the robot's position and orientation. The `planning` function is used as a callback for the action server, implementing the robot's goal-planning behaviour. It considers obstacles in the environment.
 
-**FINIRE** notare anche che il package assignemnt fa la stessa cosa di questo ma come action server, quindi modificare opportunamente.
+Besides, a launch file `assignment1.launch` to run the whole simulation, both scripts and environment, is provided.
 
 ## The assignment
 The assignment requires handling long-running tasks: until now, when the robot is moving the user cannot do anything. 
