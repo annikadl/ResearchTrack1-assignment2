@@ -29,9 +29,17 @@ Node `wall_follow_service.py` is used to let the robot follow a wall, for instan
 
 Node `go_to_point_service_service.py` implements a finite state machine that controls whether the robot behaves correctly and lets it move towards a specified point. It also checks if and when the robot successfully reaches the goal.
 
-Node `bug_as.py`
+Node `bug_as.py` ...
+
+**FINIRE** notare anche che il package assignemnt fa la stessa cosa di questo ma come action server, quindi modificare opportunamente.
 
 ## The assignment
+The assignment requires handling long-running tasks: until now, when the robot is moving the user cannot do anything. 
+The nodes that must be implemented are:
+* an action client, allowing the user to set a target point or to cancel it; this node also publishes robot position and velocity as a custom message.
+* a service node that, when called, returns the coordinates of the last target sent by the user.
+* a service node that subscribes to the robot's position and velocity and implements a server to retrieve the distance of the robot from the target and the robot's average speed.
+To conclude, a launch file to start the whole simulation must be implemented. It also must include a parameter to select the size of the averaging window of the last node.
 
 ### set_target_client
 
