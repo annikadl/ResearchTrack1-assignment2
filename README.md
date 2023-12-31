@@ -38,7 +38,7 @@ The nodes that must be implemented are:
 To conclude, a launch file to start the whole simulation must be implemented. It also must include a parameter to select the size of the averaging window of the last node.
 
 ### set_target_client
-`set_target_client` is the action server that satisfies the first request. It implements a "graphic user interface" to let the user choose from the terminal either to:
+`set_target_client.py` is the action server that satisfies the first request. It implements a "graphic user interface" to let the user choose from the terminal either to:
 * set a new target point that the robot must reach.
 * maintain the same target as before **CHECK SE HA VERAMENTE SENSO OPPURE N0, ad esempio se il punto in cui viene spawnato il robot non corrisponde al target pre impostato (potrei cambiarlo a manina eventualmente) potrebbe avere senso**
 * cancel the goal previously chosen.
@@ -53,12 +53,14 @@ Besides, the custom message, which contains velocity and position parameters, is
 This client node is run by the launch file in a separate terminal, allowing the user to access directly to the set-target-interface. 
 
 ### last_target_service
-`last_target_service` is a node implementing a service that, when called, returns the values of the last target sent by the user. The values are extracted from the ros parameters updated from the `set_target_client` and returned as response from the service. If the service is called before the user sets a target, the response gives the default values (`/des_pos_x = 0.0` and `des_pos_y = 1.0`) chosen in the launch file `assignment1.launch`. 
+`last_target_service.py` is a node implementing a service that, when called, returns the values of the last target sent by the user. The values are extracted from the ros parameters updated from the `set_target_client` and returned as response from the service. If the service is called before the user sets a target, the response gives the default values (`/des_pos_x = 0.0` and `des_pos_y = 1.0`) chosen in the launch file `assignment1.launch`. 
 
-Also this service is run by the launch file; to call it and get the last target sent by the user run the command `rosservice call /last_target`.
+Furthermore, this service is run by the launch file; to call it and get the last target sent by the user run the command `rosservice call /last_target`.
 
 ### info_service
-`info_service` is a node implementing a service that, when called, returns the distance from the goal and the average velocity of the robot.
+`info_service,py` is a node implementing a service that, when called, returns the distance from the goal and the average velocity of the robot. The subscriber callback takes the target position from the ros parameters and the actual one from the custom message sent by the `set_target_client`. The distance is computed as the euclidean distance by using the Python built-in function `math.dist(des_coordinates, actual coordinates)` by importing `math` library. The velocity values are extracted by the custom message too, they are collected in a list of dimension `window_size` with a default value of 10 (that can be modified in the launch file). Then the average velocity is computed as `average_vel_x = sum(vel_data) / min(len(vel_data), velocity_window_size)`. These values compose the response of the service.
+
+As for `last_target_service`, `info_service` is run by the launch file and can be called by using the command `rossservice call /info_service`
 
 ### assignment1.launch
 
