@@ -2,7 +2,7 @@
 This is the second assignment for the Research Track 1 exam for the Robotics Engineering Master's degree at the University of Genoa.
 
 ## Simulator
-The assignemnt takes place in Gazebo, a 3D ROS simulator. The Rviz tool is also used to provide a model of the simulator robot, including sensors, to help the user debug the robot application.
+The assignment takes place in Gazebo, a 3D ROS simulator. The Rviz tool is also used to provide a model of the simulator robot, including sensors, to help the user debug the robot application.
 
 To run the environment, namely, the windows mentioned above Gazebo and Rviz, complete the following procedure (If you do not have already installed ROS on your computer, you can download and install the Noetic version used in this assignment at https://wiki.ros.org/noetic/Installation).
 Steps:
@@ -42,11 +42,26 @@ The nodes that must be implemented are:
 To conclude, a launch file to start the whole simulation must be implemented. It also must include a parameter to select the size of the averaging window of the last node.
 
 ### set_target_client
+Is the action server that satisfies the first request. It implements a "graphic user interface" to let the user choose from the terminal either to:
+* set a new target point that the robot must reach.
+* maintain the same target as before **CHECK SE HA VERAMENTE SENSO OPPURE N0, ad esempio se il punto in cui viene spawnato il robot non corrisponde al target pre impostato (potrei cambiarlo a manina eventualmente) potrebbe avere senso**
+* cancel the goal previously chosen.
+
+The goal position is extracted from `assignment_2_2023.msg.PlanningGoal()`. The type of the goal is specified by the `Planning.action` action file, which, indeed, defines the types of the goal that the action client sends to the action servers and the result and feedback that the action server sends back to the client.
+
+When the target values, both x and y positions, are updated from the user and stored in such `input_x` and `input_y` variables, the rosparam `des_pos_x` and `des_pos_y` are updated too, by using `rospy.set_param('/des_pos_x', input_x)` and  `rospy.set_param('/des_pos_y', input_y)`.
+
+**SPIEGARE MAGARI UN PO' MEGLIO**
+Besides, the custom message, which contains velocity and position parameters, is created and sent by a publisher `pub` and subscribed from subscriber `sub_from_Odom`, which gets from "Odom" the two parameters.
 
 ### last_target_service
 
 ### info_service
 
 ### assignment1.launch
+
+## Flowchart
+
+## Possible improvements
 
 
