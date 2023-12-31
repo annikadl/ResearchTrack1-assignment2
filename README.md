@@ -27,7 +27,9 @@ Node `obstacle_avoidance.py` processes data to detect obstacles and avoid them: 
 
 Node `wall_follow_service.py` is used to let the robot follow a wall, for instance, to circumnavigate it.
 
-Node `go_to_point_service_service.py`
+Node `go_to_point_service_service.py` implements a finite state machine that controls whether the robot behaves correctly and lets it move towards a specified point. It also checks if and when the robot successfully reaches the goal.
+
+Node `bug_as.py`
 
 ## The assignment
 
