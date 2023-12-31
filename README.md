@@ -11,6 +11,23 @@ Steps:
 * move to the second terminal and choose where to clone the repository
 * clone this repository with the command `git clone _url_`.
 * move into the directory
-* run the command `roslaunch assignment_2_2023 assignment1.launch` to start the simulation
+* run the command `roslaunch assignment_2_2023 assignment1.launch` to start the simulation.
+At this point the simulator has started, the program is running and a mobile robot is spawned in the center of the playground.
+
+The playground is represented by a squared arena in which the robot can move. Besides, some walls around and inside the playground obstacle the robot's motion.
+
+## Already implemented nodes
+Some nodes were already implemented by the Professor of the course. These nodes aim to plan the motion of the robot, by processing the output of the sensors.
+#### 
+
+## The assignment
+
+### set_target_client
+
+### last_target_service
+
+### info_service
+
+### assignment1.launch
 
 
