@@ -7,7 +7,7 @@ The assignment takes place in Gazebo, a 3D ROS simulator. The Rviz tool is also 
 To run the environment, namely, the windows mentioned above Gazebo and Rviz, complete the following procedure (If you do not have already installed ROS on your computer, you can download and install the Noetic version used in this assignment at https://wiki.ros.org/noetic/Installation).
 Steps:
 * open at least two terminals.
-* in the first one, move into your ROS workspace and run the master with the command `roscore`.
+* in the first one, move into your ROS workspace and run the ROS master with the command `roscore`.
 * move to the second terminal and choose where to clone the repository
 * clone this repository with the command `git clone _url_`.
 * move into the directory
