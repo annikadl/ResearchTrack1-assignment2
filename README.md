@@ -40,7 +40,6 @@ To conclude, a launch file to start the whole simulation must be implemented. It
 ### set_target_client
 `set_target_client.py` is the action server that satisfies the first request. It implements a "graphic user interface" to let the user choose from the terminal either to:
 * set a new target point that the robot must reach.
-* maintain the same target as before **CHECK SE HA VERAMENTE SENSO OPPURE N0, ad esempio se il punto in cui viene spawnato il robot non corrisponde al target pre impostato (potrei cambiarlo a manina eventualmente) potrebbe avere senso**
 * cancel the goal previously chosen.
 
 The goal position is extracted from `assignment_2_2023.msg.PlanningGoal()`. The type of the goal is specified by the `Planning.action` action file, which, indeed, defines the types of the goal that the action client sends to the action servers and the result and feedback that the action server sends back to the client.
