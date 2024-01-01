@@ -8,8 +8,11 @@ import actionlib.msg
 import assignment_2_2023.msg
 from assignment_2_2023.msg import Vel
 from assignment_2_2023.msg import PlanningAction, PlanningGoal, PlanningResult
+from std_srvs.srv import SetBool
+from actionlib_msgs.msg import GoalStatus
 
 pub = None
+GoalCancelled = False
 
 ###### PUBLISHER
 def publisher_node(msg):
@@ -37,6 +40,7 @@ def publisher_node(msg):
 
 ####### CLIENT
 def parameters_client_main():
+    global GoalCancelled
     
     # Create an action client
     client = actionlib.SimpleActionClient('/reaching_goal', assignment_2_2023.msg.PlanningAction)
@@ -47,7 +51,7 @@ def parameters_client_main():
         print("Do you want to set or cancel the goal?")
         # TODO: handle non-char input
         # try:
-        command = input("Press y to set, n to continue, or c to cancel: ")
+        command = input("Press y to set or c to cancel: ")
         # except ValueError:
         # rospy.logerr("Invalid input. Please enter a character.")
 
@@ -73,25 +77,33 @@ def parameters_client_main():
 
             goal.target_pose.pose.position.x = input_x
             goal.target_pose.pose.position.y = input_y
-
-        # Goal isn't modified
-        if command == 'n':
-            pass
+            
+            client.send_goal(goal)
+            GoalCancelled = False
 
         # Cancel the goal -> desired values go to zero? or to random ones?
-        if command == 'c':
-            client.cancel_goal()
-            print("Goal cancelled")
+        elif command == 'c':
+            
+            if GoalCancelled == False:
+            	GoalCancelled = True
+            	client.cancel_goal()
+            	rospy.loginfo("Goal cancelled")
+            # to handle multiple cancel inputs	
+            elif GoalCancelled == True:
+            	rospy.loginfo("Goal has already been cancelled")
+            
+        else:            
+            rospy.loginfo("Invalid input")         
+        			
 
-        rospy.loginfo("Received goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
+        rospy.loginfo("Last received goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
 
-        client.send_goal(goal)
 
 def main():
     rospy.init_node('set_target_client')
 
     # Global pub
-    global pub
+    global pub, GoalCancelled
 
     # PUBLISHER: send a message which contains two parameters (velocity and position)
     pub = rospy.Publisher("/pos_vel", Vel, queue_size=1)
