@@ -12,7 +12,7 @@ from std_srvs.srv import SetBool
 from actionlib_msgs.msg import GoalStatus
 
 pub = None
-GoalCancelled = False
+GoalCancelled = True
 
 ###### PUBLISHER
 def publisher_node(msg):
