@@ -5,6 +5,7 @@ This is the second assignment for the Research Track 1 exam for the Robotics Eng
 The assignment takes place in Gazebo, a 3D ROS simulator. The Rviz tool is also used to provide a model of the simulator robot, including sensors, to help the user debug the robot application.
 
 To run the environment, namely, the windows mentioned above Gazebo and Rviz, complete the following procedure (If you do not have already installed ROS on your computer, you can download and install the Noetic version used in this assignment at https://wiki.ros.org/noetic/Installation).
+
 Steps:
 * open at least two terminals.
 * in the first one, move into your ROS workspace and run the ROS master with the command `roscore`.
@@ -14,7 +15,7 @@ Steps:
 * run the command `roslaunch assignment_2_2023 assignment1.launch` to start the simulation.
 At this point the simulator has started, the program is running and a mobile robot is spawned in the center of the playground.
 
-N.B. if the scripts are not found, go in the `scripts` folder and run the command `chmod +x *.py`. Then try again to run `roslaunch assignment_2_2023 assignment1.launch`.
+N.B. If the scripts are not found, go to the `scripts` folder and run the command `chmod +x *.py`. Then try again to run `roslaunch assignment_2_2023 assignment1.launch`.
 
 It is important to notice (this topic is also better explained later) that the launch file 'assignment1.launch`, not only runs the environment but also all the nodes of the assignment`. By knowing that, to run just a single node the command `rosrun assignment_2_2023 _NodeName.py_` must be used.
 
