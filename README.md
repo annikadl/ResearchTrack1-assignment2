@@ -88,11 +88,13 @@ In the launch file:
 
 
 ## Possible improvements
-Several improvements are possible.
-* The robot velocity can be increased to make the simulation faster and smoother.
-* The user interface can be improved:
-     * it can be more attractive, by presenting a more detailed and easy-to-use menu for the user
-     * it can be possible to build commands to use services from the same terminal where the desired position is entered. This would make it easier for the user to interact with the robot and the simulation. Until now just one terminal for the desired position is opened, while the services must be called on a separate one.
+This project has several possible improvements.
+
+First of all, as it is possible to notice, the robot moves quite slowly; its speed can be increased to achieve a faster and smoother simulation. However, the speed increase must be feasible also in the real world, namely, it is required to not exceed physical boundaries.
+
+The provided user interface can be modified to become more user-friendly. It can be redesigned to be more attractive, for instance by presenting a more detailed and easy-to-use menu for the user. Besides, it is possible to build commands to use services directly from the same terminal where the desired position is entered. This would make it easier for the user to interact with the robot and the simulation. Until now just one terminal for the desired position is opened, while the services must be called separately on another terminal.
+
+
 * The goal could be chosen directly from the playground, by clicking on a point. Besides, non-performable goals should be not eligible.
 
 
