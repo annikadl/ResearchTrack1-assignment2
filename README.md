@@ -103,3 +103,4 @@ In order to make the simulation even more user-friendly, it should be possible t
 When encountering obstacles, the robot "autonomously" chooses the direction along which follows the wall. To improve performance, the chosen direction should be the one that belongs to the shortest path to the goal. 
 
 
+aaa
