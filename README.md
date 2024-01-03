@@ -54,7 +54,8 @@ If the user chooses to set a new goal, the target values, both x and y positions
 
 On the other hand, if the user chooses to cancel the goal, some singular situations must be handled. If the goal is has never been entered or it has already been reached, it does not make sense to cancel it. To avoid this kind of scenario, the global bool variable `reached` (provided by the `on_sub_result` callback) is used: if this value is `True`, the goal is not cancelled and the user is told the goal is not active anymore and therefore cannot be removed. In all the other scenarios, the goal is correctly removed by using the command `client.cancel_goal()` and suddenly the robot stops. 
 
-
+### on_sub_result
+This function is the callback of the `sub_from_result` subscriber, which subscribes to the `/reaching_goal/result` topic, to get the result of the task associated with the goal. The callback stores in a variable called `reached` whether the goal has been succesfully reached or not.
 
 
 **SPIEGARE MAGARI UN PO' MEGLIO**
