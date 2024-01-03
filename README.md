@@ -79,12 +79,11 @@ In the launch file:
 
 
 ## Possible improvements
-Several improvements are possible:
-* increase the robot's velocity, to make the simulation smoother.
-* improving the user interface by:
-    * making it more attractive;
-    * making it possible to also call the service with a specific command
-* neither there is a check on the input type nor a different input type error is handled.
-* choose the goal directly from the arena.
+Several improvements are possible.
+* The robot velocity can be increased to make the simulation faster and smoother.
+* The user interface can be improved:
+     * it can be more attractive, by presenting a more detailed and easy-to-use menu for the user
+     * it can be possible to build commands to use services from the same terminal where the desired position is entered. This would make it easier for the user to interact with the robot and the simulation. Until now just one terminal for the desired position is opened, while the services must be called on a separate one.
+* The goal could be chosen directly from the playground, by clicking on a point. Besides, non-performable goals should be not eligible.
 
 
