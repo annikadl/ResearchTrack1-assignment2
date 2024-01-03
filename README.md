@@ -44,7 +44,7 @@ To conclude, a launch file to start the whole simulation must be implemented. It
 `set_target_client.py` is the action server that satisfies the first request. It consists of different functions.
 Besides, this node is run, by the launch file, in a separate terminal, allowing the user to directly access the set-target interface. 
 
-### set_client_parameters
+#### set_client_parameters
 This function implements an action client, which also provides a user interface, running on a separate terminal, to let the user choose from the terminal either to:
 * set a new target point that the robot must reach.
 * cancel the goal previously chosen.
@@ -55,14 +55,14 @@ If the user chooses to set a new goal, the target values, both x and y positions
 
 On the other hand, if the user chooses to cancel the goal, some singular situations must be handled. If the goal is has never been entered or it has already been reached, it does not make sense to cancel it. To avoid this kind of scenario, the global bool variable `reached` (provided by the `on_sub_result` callback) is used: if this value is `True`, the goal is not cancelled and the user is told the goal is not active anymore and therefore cannot be removed. In all the other scenarios, the goal is correctly removed by using the command `client.cancel_goal()` and suddenly the robot stops. 
 
-##### on_sub_result
+#### on_sub_result
 This function is the callback of the `sub_from_result` subscriber, which subscribes to the `/reaching_goal/result` topic, to get the result of the task associated with the goal. The callback stores in a variable called `reached` whether the goal has been succesfully reached or not.
 
-##### publisher_node
+#### publisher_node
 The `publisher_node` function is used to create and publish a custom message containing the actual position (x,y) and velocity (linear, angular) of the robot. This function represents the callback of a subscriber, which takes the required information subscribing to the topic `odom`.
 
 
-##### last_target_service.py
+### last_target_service.py
 `last_target_service.py` is a node implementing a service that, when called, returns the values of the last target sent by the user. To make it feasible, a srv file `Last_target.srv` is created in the so-called directory; it contains the expected service response type.
 The last target values are extracted from the ros parameters updated from the `set_target_client,py` and returned as response from the service. If the service is called before the user sets a target, the response gives the default values (`/des_pos_x = 0.0` and `des_pos_y = 1.0`) chosen in the launch file `assignment1.launch`. 
 
