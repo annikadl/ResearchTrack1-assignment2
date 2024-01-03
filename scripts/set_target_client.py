@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 
 import rospy
 from geometry_msgs.msg import Point, Pose, Twist
@@ -7,12 +7,13 @@ import actionlib
 import actionlib.msg
 import assignment_2_2023.msg
 from assignment_2_2023.msg import Vel
-from assignment_2_2023.msg import PlanningAction, PlanningGoal, PlanningResult
+from assignment_2_2023.msg import PlanningAction, PlanningGoal, PlanningResult, PlanningActionResult
 from std_srvs.srv import SetBool
 from actionlib_msgs.msg import GoalStatus
 
 pub = None
 GoalCancelled = True
+reached = False
 
 ###### PUBLISHER
 def publisher_node(msg):
@@ -32,16 +33,16 @@ def publisher_node(msg):
     my_pos_and_vel.vel_x = actual_vel_linear.x
     my_pos_and_vel.vel_z = actual_vel_angular.z
 
-    #rospy.loginfo(my_pos_and_vel)
+    # rospy.loginfo(my_pos_and_vel)
     pub.publish(my_pos_and_vel)
-    
+
     # Set the publishing rate (e.g., 1 Hz)
-    #rate = rospy.Rate(0.0001)  # 1 Hz
+    # rate = rospy.Rate(0.0001)  # 1 Hz
 
 ####### CLIENT
 def parameters_client_main():
-    global GoalCancelled
-    
+    global GoalCancelled, reached
+
     # Create an action client
     client = actionlib.SimpleActionClient('/reaching_goal', assignment_2_2023.msg.PlanningAction)
     client.wait_for_server()
@@ -77,27 +78,39 @@ def parameters_client_main():
 
             goal.target_pose.pose.position.x = input_x
             goal.target_pose.pose.position.y = input_y
-            
+
             client.send_goal(goal)
             GoalCancelled = False
 
         # Cancel the goal -> desired values go to zero? or to random ones?
         elif command == 'c':
-            
-            if GoalCancelled == False:
-            	GoalCancelled = True
-            	client.cancel_goal()
-            	rospy.loginfo("Goal cancelled")
-            # to handle multiple cancel inputs	
-            elif GoalCancelled == True:
-            	rospy.loginfo("Goal has already been cancelled")
-            
-        else:            
-            rospy.loginfo("Invalid input")         
-        			
+
+            if reached == False:
+                if GoalCancelled == False:
+                    # Check if the client is in the ACTIVE state before canceling
+                    if client.get_state() == actionlib.GoalStatus.ACTIVE:
+                        GoalCancelled = True
+                        client.cancel_goal()
+                        rospy.loginfo("Goal cancelled")
+                    else:
+                        rospy.loginfo("Goal is not active, cannot be cancelled")
+                elif GoalCancelled == True:
+                    rospy.loginfo("Goal has already been cancelled")
+            elif reached == True:
+                rospy.loginfo("Goal already reached, can't be canceled")
+
+        else:
+            rospy.loginfo("Invalid input")
 
         rospy.loginfo("Last received goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
 
+
+def on_sub_result(action_result):
+    global reached
+    reached = not (action_result.status.status == action_result.status.SUCCEEDED or action_result.status.status == action_result.status.PREEMPTED)
+
+
+# def on_sub_feedback():        
 
 def main():
     rospy.init_node('set_target_client')
@@ -110,6 +123,12 @@ def main():
 
     # SUBSCRIBER: get from "Odom" two parameters (velocity and position)
     sub_from_Odom = rospy.Subscriber("/odom", Odometry, publisher_node)
+
+    # SUBSCRIBER
+    sub_from_result = rospy.Subscriber("/reaching_goal/result", PlanningActionResult, on_sub_result)
+
+    # SUBSCRIBER
+    # sub_from_feedback = rospy-Subscriber(
 
     # Calling the function client
     parameters_client_main()
