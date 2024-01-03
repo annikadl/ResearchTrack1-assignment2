@@ -41,15 +41,21 @@ The nodes that must be implemented are:
 To conclude, a launch file to start the whole simulation must be implemented. It also must include a parameter to select the size of the averaging window of the last node.
 
 ### set_target_client.py
-`set_target_client.py` is the action server that satisfies the first request. It consist of different functions.
+`set_target_client.py` is the action server that satisfies the first request. It consists of different functions.
 
 ### set_client_parameters
-This function implements a user interface, running on a separate terminal, to let the user choose from the terminal either to:
+This function implements an action client, which also provides a user interface, running on a separate terminal, to let the user choose from the terminal either to:
 * set a new target point that the robot must reach.
 * cancel the goal previously chosen.
+  
+Firstly, the action client is activated and waits for the server. Once the server is running too, the goal position is extracted from `assignment_2_2023.msg.PlanningGoal()`; The type of the goal is specified by the `Planning.action` action file, which, indeed, defines the types of the goal that the action client sends to the action servers and the result and feedback that the action server sends back to the client.
 
-The goal position is extracted from `assignment_2_2023.msg.PlanningGoal()`. The type of the goal is specified by the `Planning.action` action file, which, indeed, defines the types of the goal that the action client sends to the action servers and the result and feedback that the action server sends back to the client.
-When the target values, both x and y positions, are entered from the user, the script checks whether they are float or not; if not the user can insert them again. Then the values are stored in such `input_x` and `input_y` variables and the ros parameters `des_pos_x` and `des_pos_y` are updated too, by using `rospy.set_param('/des_pos_x', input_x)` and  `rospy.set_param('/des_pos_y', input_y)`. 
+If the user chooses to set a new goal, the target values, both x and y positions, are taken from the keyboard and the script checks whether they are float or not; if not the user can insert them again. Then the values are stored in such `input_x` and `input_y` variables and the ros parameters `des_pos_x` and `des_pos_y` are updated too, by using `rospy.set_param('/des_pos_x', input_x)` and  `rospy.set_param('/des_pos_y', input_y)`.  In conclusion, the goal is sent to the server.
+
+On the other hand, if the user chooses to cancel the goal, some singular situations must be handled. If the goal is has never been entered or it has already been reached, it does not make sense to cancel it. To avoid this kind of scenario, the global bool variable `reached` (provided by the `on_sub_result` callback) is used: if this value is `True`, the goal is not cancelled and the user is told the goal is not active anymore and therefore cannot be removed. In all the other scenarios, the goal is correctly removed by using the command `client.cancel_goal()` and suddenly the robot stops. 
+
+
+
 
 **SPIEGARE MAGARI UN PO' MEGLIO**
 Besides, the custom message, which contains velocity and position parameters, is created and sent by a publisher `pub` and subscribed from subscriber `sub_from_Odom`, which gets from "Odom" the two parameters.
