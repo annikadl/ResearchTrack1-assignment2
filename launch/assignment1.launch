@@ -11,4 +11,3 @@
     <node pkg="assignment_2_2023" type="info_service.py" name="info_service" />
     <node pkg="assignment_2_2023" type="set_target_client.py" name="set_target_client" output="screen" launch-prefix="lxterminal -e" />
 </launch>
-

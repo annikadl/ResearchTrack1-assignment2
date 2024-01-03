@@ -12,7 +12,6 @@ from std_srvs.srv import SetBool
 from actionlib_msgs.msg import GoalStatus
 
 pub = None
-GoalCancelled = True
 reached = False
 
 ###### PUBLISHER
@@ -41,7 +40,7 @@ def publisher_node(msg):
 
 ####### CLIENT
 def parameters_client_main():
-    global GoalCancelled, reached
+    global reached
 
     # Create an action client
     client = actionlib.SimpleActionClient('/reaching_goal', assignment_2_2023.msg.PlanningAction)
@@ -86,16 +85,13 @@ def parameters_client_main():
         elif command == 'c':
 
             if reached == False:
-                if GoalCancelled == False:
-                    # Check if the client is in the ACTIVE state before canceling
-                    if client.get_state() == actionlib.GoalStatus.ACTIVE:
-                        GoalCancelled = True
-                        client.cancel_goal()
-                        rospy.loginfo("Goal cancelled")
-                    else:
-                        rospy.loginfo("Goal is not active, cannot be cancelled")
-                elif GoalCancelled == True:
-                    rospy.loginfo("Goal has already been cancelled")
+                # Check if the client is in the ACTIVE state before canceling
+                if client.get_state() == actionlib.GoalStatus.ACTIVE:
+                    GoalCancelled = True
+                    client.cancel_goal()
+                    rospy.loginfo("Goal cancelled")
+                else:
+                    rospy.loginfo("Goal is not active, cannot be cancelled")
             elif reached == True:
                 rospy.loginfo("Goal already reached, can't be canceled")
 
@@ -116,7 +112,7 @@ def main():
     rospy.init_node('set_target_client')
 
     # Global pub
-    global pub, GoalCancelled
+    global pub
 
     # PUBLISHER: send a message which contains two parameters (velocity and position)
     pub = rospy.Publisher("/pos_vel", Vel, queue_size=1)
