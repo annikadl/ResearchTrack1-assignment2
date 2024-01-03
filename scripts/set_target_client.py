@@ -38,6 +38,7 @@ def publisher_node(msg):
     # Set the publishing rate (e.g., 1 Hz)
     # rate = rospy.Rate(0.0001)  # 1 Hz
 
+
 ####### CLIENT
 def parameters_client_main():
     global reached
@@ -59,19 +60,31 @@ def parameters_client_main():
         goal = assignment_2_2023.msg.PlanningGoal()
         goal.target_pose.pose.position.x = rospy.get_param('/des_pos_x')
         goal.target_pose.pose.position.y = rospy.get_param('/des_pos_y')
-        rospy.loginfo("Actual goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
+        #rospy.loginfo("Actual goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
 
         # Modify goal from keyboard
         if command == 'y':
-            input_x = input("Enter desired position x: ")
-            input_y = input("Enter desired position y: ")
-            # TODO: handle non-numerical values
-            # except ValueError:
-            # rospy.logerr("Invalid input. Please enter numerical values.")
+            rospy.loginfo("Last goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
 
-            input_x = float(input_x)
-            input_y = float(input_y)
-            # Set parameters on the parameter server
+            while(True):
+                input_x = input("Enter desired position x: ")
+                try:
+                    input_x = float(input_x)
+                    break
+                    
+                except:
+                    print("Invalid input, enter a number")
+            
+            while(True):
+                input_y = input("Enter desired position y: ")
+                try:
+                    input_y = float(input_y)
+                    break
+                    
+                except:
+                    print("Invalid input, enter a number")            
+            
+            # Set ros parameters
             rospy.set_param('/des_pos_x', input_x)
             rospy.set_param('/des_pos_y', input_y)
 
@@ -79,15 +92,14 @@ def parameters_client_main():
             goal.target_pose.pose.position.y = input_y
 
             client.send_goal(goal)
-            GoalCancelled = False
+            rospy.loginfo("Actual goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
 
-        # Cancel the goal -> desired values go to zero? or to random ones?
+        # Cancel the goal
         elif command == 'c':
 
             if reached == False:
                 # Check if the client is in the ACTIVE state before canceling
                 if client.get_state() == actionlib.GoalStatus.ACTIVE:
-                    GoalCancelled = True
                     client.cancel_goal()
                     rospy.loginfo("Goal cancelled")
                 else:
@@ -98,15 +110,14 @@ def parameters_client_main():
         else:
             rospy.loginfo("Invalid input")
 
-        rospy.loginfo("Last received goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
+        # rospy.loginfo("Last received goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
 
 
 def on_sub_result(action_result):
     global reached
     reached = not (action_result.status.status == action_result.status.SUCCEEDED or action_result.status.status == action_result.status.PREEMPTED)
 
-
-# def on_sub_feedback():        
+      
 
 def main():
     rospy.init_node('set_target_client')
@@ -120,13 +131,10 @@ def main():
     # SUBSCRIBER: get from "Odom" two parameters (velocity and position)
     sub_from_Odom = rospy.Subscriber("/odom", Odometry, publisher_node)
 
-    # SUBSCRIBER
+    # SUBSCRIBER: get from PlanningActionResult a parameter to know whether the goal has been reached or not
     sub_from_result = rospy.Subscriber("/reaching_goal/result", PlanningActionResult, on_sub_result)
 
-    # SUBSCRIBER
-    # sub_from_feedback = rospy-Subscriber(
-
-    # Calling the function client
+    # Calling the action client
     parameters_client_main()
 
 if __name__ == '__main__':
