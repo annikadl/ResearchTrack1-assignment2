@@ -40,27 +40,29 @@ The nodes that must be implemented are:
 * a service node that subscribes to the robot's position and velocity and implements a server to retrieve the distance of the robot from the target and the robot's average speed.
 To conclude, a launch file to start the whole simulation must be implemented. It also must include a parameter to select the size of the averaging window of the last node.
 
-### set_target_client
-`set_target_client.py` is the action server that satisfies the first request. It implements a "graphic user interface" to let the user choose from the terminal either to:
+### set_target_client.py
+`set_target_client.py` is the action server that satisfies the first request. It consist of different functions.
+
+### set_client_parameters
+This function implements a user interface, running on a separate terminal, to let the user choose from the terminal either to:
 * set a new target point that the robot must reach.
 * cancel the goal previously chosen.
 
 The goal position is extracted from `assignment_2_2023.msg.PlanningGoal()`. The type of the goal is specified by the `Planning.action` action file, which, indeed, defines the types of the goal that the action client sends to the action servers and the result and feedback that the action server sends back to the client.
-
-When the target values, both x and y positions, are updated from the user and stored in such `input_x` and `input_y` variables, the ros parameters `des_pos_x` and `des_pos_y` are updated too, by using `rospy.set_param('/des_pos_x', input_x)` and  `rospy.set_param('/des_pos_y', input_y)`.
+When the target values, both x and y positions, are entered from the user, the script checks whether they are float or not; if not the user can insert them again. Then the values are stored in such `input_x` and `input_y` variables and the ros parameters `des_pos_x` and `des_pos_y` are updated too, by using `rospy.set_param('/des_pos_x', input_x)` and  `rospy.set_param('/des_pos_y', input_y)`. 
 
 **SPIEGARE MAGARI UN PO' MEGLIO**
 Besides, the custom message, which contains velocity and position parameters, is created and sent by a publisher `pub` and subscribed from subscriber `sub_from_Odom`, which gets from "Odom" the two parameters.
 
 This client node is run by the launch file in a separate terminal, allowing the user to access directly to the set-target interface. 
 
-### last_target_service
+### last_target_service.py
 `last_target_service.py` is a node implementing a service that, when called, returns the values of the last target sent by the user. To make it feasible, a srv file `Last_target.srv` is created in the so-called directory; it contains the expected service response type.
 The last target values are extracted from the ros parameters updated from the `set_target_client,py` and returned as response from the service. If the service is called before the user sets a target, the response gives the default values (`/des_pos_x = 0.0` and `des_pos_y = 1.0`) chosen in the launch file `assignment1.launch`. 
 
 Furthermore, this service is run by the launch file; to call it and get the last target sent by the user run the command `rosservice call /last_target` on the terminal.
 
-### info_service
+### info_service.py
 `info_service,py` is a node implementing a service that, when called, returns the distance from the goal and the average velocity of the robot. To make it feasible, a srv file `info_service.srv` is created in the so-called directory; it contains the expected service response type. A subscriber is implemented and its callback takes the target position from the ros parameters and the actual one from the custom message sent by the `set_target_client.py`. The distance is computed as the Euclidean distance by using the Python built-in function `math.dist(des_coordinates, actual coordinates)` by importing `math` library. The velocity values are extracted by the custom message too, they are collected in a list of dimension `window_size` with a default value of 10 (that can be modified in the launch file). Then the average velocity is computed as `average_vel_x = sum(vel_data) / min(len(vel_data), velocity_window_size)`. These values compose the response of the service.
 
 As for `last_target_service.py`, `info_service.py` is run by the launch file and the service can be called by using the command `rosservice call /info_service` on the terminal.
