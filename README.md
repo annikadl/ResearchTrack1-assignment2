@@ -42,6 +42,7 @@ To conclude, a launch file to start the whole simulation must be implemented. It
 
 ### set_target_client.py
 `set_target_client.py` is the action server that satisfies the first request. It consists of different functions.
+Besides, this node is run, by the launch file, in a separate terminal, allowing the user to directly access the set-target interface. 
 
 ### set_client_parameters
 This function implements an action client, which also provides a user interface, running on a separate terminal, to let the user choose from the terminal either to:
@@ -57,11 +58,9 @@ On the other hand, if the user chooses to cancel the goal, some singular situati
 ### on_sub_result
 This function is the callback of the `sub_from_result` subscriber, which subscribes to the `/reaching_goal/result` topic, to get the result of the task associated with the goal. The callback stores in a variable called `reached` whether the goal has been succesfully reached or not.
 
+### publisher_node
+The `publisher_node` function is used to create and publish a custom message containing the actual position (x,y) and velocity (linear, angular) of the robot. This function represents the callback of a subscriber, which takes the required information subscribing to the topic `odom`.
 
-**SPIEGARE MAGARI UN PO' MEGLIO**
-Besides, the custom message, which contains velocity and position parameters, is created and sent by a publisher `pub` and subscribed from subscriber `sub_from_Odom`, which gets from "Odom" the two parameters.
-
-This client node is run by the launch file in a separate terminal, allowing the user to access directly to the set-target interface. 
 
 ### last_target_service.py
 `last_target_service.py` is a node implementing a service that, when called, returns the values of the last target sent by the user. To make it feasible, a srv file `Last_target.srv` is created in the so-called directory; it contains the expected service response type.
