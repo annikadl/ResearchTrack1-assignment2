@@ -101,6 +101,3 @@ Non-performable goals should not be eligible, such as points that do not belong 
 In order to make the simulation even more user-friendly, it should be possible to choose the goal directly from the playground, by clicking on it. Besides, the possibility of choosing multiple goals to create a path that the robot must follow can be implemented too. 
 
 When encountering obstacles, the robot "autonomously" chooses the direction along which follows the wall. To improve performance, the chosen direction should be the one that belongs to the shortest path to the goal. 
-
-
-aaa
