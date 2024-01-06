@@ -35,7 +35,7 @@ Besides, a launch file `assignment1.launch` to run the whole simulation, both sc
 ## The assignment
 The assignment requires handling long-running tasks: until now, when the robot is moving the user cannot do anything. 
 The nodes that must be implemented are:
-* an action client, allowing the user to set a target point or to cancel it; this node also publishes robot position and velocity as a custom message.
+* an action client, allowing the user to set a target point or to cancel it (this node also uses the feedback/status of the action server to know when the target has been reached); this node also publishes robot position and velocity as a custom message.
 * a service node that, when called, returns the coordinates of the last target sent by the user.
 * a service node that subscribes to the robot's position and velocity and implements a server to retrieve the distance of the robot from the target and the robot's average speed.
 To conclude, a launch file to start the whole simulation must be implemented. It also must include a parameter to select the size of the averaging window of the last node.
