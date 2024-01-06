@@ -1,17 +1,26 @@
 #!/usr/bin/env python
 
 """
-This is the action server that satisfies the request: implement an action client, allowing the user to set a target point or to cancel it (this node also uses the feedback/status of the action server to know when the target has been reached); this node also publishes robot position and velocity as a custom message.
+This is the action server that satisfies the request: implement an action client, 
+allowing the user to set a target point or to cancel it (this node also uses the 
+feedback/status of the action server to know when the target has been reached); 
+this node also publishes robot position and velocity as a custom message.
 
 It implements different functions.
 
-set_client_parameters() implements an action client, which also provides a user interface, running on a separate terminal, to let the user choose from the terminal either to:
+set_client_parameters() implements an action client, which also provides a user 
+interface, running on a separate terminal, to let the user choose from the terminal either to:
 * set a new target point that the robot must reach.
 * cancel the goal previously chosen.
 
-on_sub_result() is the callback of the sub_from_result subscriber, which subscribes to the /reaching_goal/result topic, to get the result of the task associated with the goal. The callback stores in a variable called `reached` whether the goal has been succesfully reached or not.
+on_sub_result() is the callback of the sub_from_result subscriber, which subscribes
+to the /reaching_goal/result topic, to get the result of the task associated with 
+the goal. The callback stores in a variable called `reached` whether the goal has 
+been succesfully reached or not.
 
-The publisher_node() function is used to create and publish a custom message containing the actual position (x,y) and velocity (linear, angular) of the robot. This function represents the callback of a subscriber, which takes the required information subscribing to the topic `odom`.
+The publisher_node() function is used to create and publish a custom message containing 
+the actual position (x,y) and velocity (linear, angular) of the robot. This function 
+represents the callback of a subscriber, which takes the required information subscribing to the topic `odom`.
 
 """
 

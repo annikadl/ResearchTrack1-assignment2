@@ -1,5 +1,27 @@
 #!/usr/bin/env python
 
+"""
+info_service,py is a node implementing a service that, when called, returns the distance from
+the goal and the average velocity of the robot. 
+
+To make it feasible, a srv file info_service.srv is created in the so-called directory; it
+contains the expected service response type. 
+
+A subscriber is implemented and its callback takes the target position from the ros parameters
+and the actual one from the custom message sent by the set_target_client.py. The distance is
+computed as the Euclidean distance by using the Python built-in function
+math.dist(des_coordinates, actual coordinates) by importing math library. 
+The velocity values are extracted by the custom message too, they are collected in a list of
+dimension window_size with a default value of 10 (that can be modified in the launch file).
+Then the average velocity is computed as average_vel_x = sum(vel_data) / min(len(vel_data),
+velocity_window_size). These values compose the response of the service.
+
+info_service.py is run by the launch file and the service can be called by using the command
+rosservice call /info_service on the terminal.
+
+
+"""
+
 import rospy
 from geometry_msgs.msg import Point, Pose, Twist
 from nav_msgs.msg import Odometry
