@@ -22,6 +22,7 @@ def get_last_target(msg):
 def result_callback(s):
     global last_des_x, last_des_y 
     
+    # MODIFIED HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
     response = Last_targetResponse()
     response.last_target_x = last_des_x
     response.last_target_y = last_des_y
@@ -43,6 +44,9 @@ def last_target_service():
 
 if __name__ == "__main__":
     last_target_service()
+    
+    
+
 
 
 

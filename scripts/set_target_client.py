@@ -1,5 +1,20 @@
 #!/usr/bin/env python
 
+"""
+This is the action server that satisfies the request: implement an action client, allowing the user to set a target point or to cancel it (this node also uses the feedback/status of the action server to know when the target has been reached); this node also publishes robot position and velocity as a custom message.
+
+It implements different functions.
+
+set_client_parameters() implements an action client, which also provides a user interface, running on a separate terminal, to let the user choose from the terminal either to:
+* set a new target point that the robot must reach.
+* cancel the goal previously chosen.
+
+on_sub_result() is the callback of the sub_from_result subscriber, which subscribes to the /reaching_goal/result topic, to get the result of the task associated with the goal. The callback stores in a variable called `reached` whether the goal has been succesfully reached or not.
+
+The publisher_node() function is used to create and publish a custom message containing the actual position (x,y) and velocity (linear, angular) of the robot. This function represents the callback of a subscriber, which takes the required information subscribing to the topic `odom`.
+
+"""
+
 import rospy
 from geometry_msgs.msg import Point, Pose, Twist
 from nav_msgs.msg import Odometry
@@ -11,6 +26,7 @@ from assignment_2_2023.msg import PlanningAction, PlanningGoal, PlanningResult, 
 from std_srvs.srv import SetBool
 from actionlib_msgs.msg import GoalStatus
 
+
 pub = None
 reached = False
 
@@ -18,7 +34,6 @@ reached = False
 def publisher_node(msg):
     # Create a publisher
     global pub
-    # pub = rospy.Publisher('pub_position_velocity', Vel, queue_size=10)
 
     # Get the actual position and velocity
     actual_pos = msg.pose.pose.position
@@ -36,7 +51,7 @@ def publisher_node(msg):
     pub.publish(my_pos_and_vel)
 
     # Set the publishing rate (e.g., 1 Hz)
-    # rate = rospy.Rate(0.0001)  # 1 Hz
+    # rate = rospy.Rate(0.1)  # 1 Hz
 
 
 ####### CLIENT
@@ -49,50 +64,48 @@ def parameters_client_main():
 
     while not rospy.is_shutdown():
         # subscriber_node()
-        print("Do you want to set or cancel the goal?")
-        # TODO: handle non-char input
-        # try:
-        command = input("Press y to set or c to cancel: ")
-        # except ValueError:
-        # rospy.logerr("Invalid input. Please enter a character.")
+        rospy.loginfo("\n Hello! This is the simulation menu! \n PRESS: \n y - to set a new goal \n c - to cancel the last goal \n")
+
+        command = input("What do you want to do?: ")
 
         # Get the actual goal
         goal = assignment_2_2023.msg.PlanningGoal()
         goal.target_pose.pose.position.x = rospy.get_param('/des_pos_x')
         goal.target_pose.pose.position.y = rospy.get_param('/des_pos_y')
-        #rospy.loginfo("Actual goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
-
-        # Modify goal from keyboard
+        
+        # Handling inputs
         if command == 'y':
             rospy.loginfo("Last goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
 
-            while(True):
+            while True:
                 input_x = input("Enter desired position x: ")
                 try:
                     input_x = float(input_x)
                     break
-                    
+
                 except:
                     print("Invalid input, enter a number")
-            
-            while(True):
+
+            while True:
                 input_y = input("Enter desired position y: ")
                 try:
                     input_y = float(input_y)
                     break
-                    
+
                 except:
-                    print("Invalid input, enter a number")            
-            
+                    print("Invalid input, enter a number")
+
             # Set ros parameters
             rospy.set_param('/des_pos_x', input_x)
             rospy.set_param('/des_pos_y', input_y)
 
+            # Set goal parameters
             goal.target_pose.pose.position.x = input_x
             goal.target_pose.pose.position.y = input_y
 
             client.send_goal(goal)
             rospy.loginfo("Actual goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
+
 
         # Cancel the goal
         elif command == 'c':
@@ -110,19 +123,15 @@ def parameters_client_main():
         else:
             rospy.loginfo("Invalid input")
 
-        # rospy.loginfo("Last received goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
-
-
+# callback to get the state
 def on_sub_result(action_result):
     global reached
     reached = not (action_result.status.status == action_result.status.SUCCEEDED or action_result.status.status == action_result.status.PREEMPTED)
 
-      
 
 def main():
     rospy.init_node('set_target_client')
 
-    # Global pub
     global pub
 
     # PUBLISHER: send a message which contains two parameters (velocity and position)
