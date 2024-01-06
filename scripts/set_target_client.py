@@ -72,7 +72,6 @@ def parameters_client_main():
     client.wait_for_server()
 
     while not rospy.is_shutdown():
-        # subscriber_node()
         rospy.loginfo("\n Hello! This is the simulation menu! \n PRESS: \n y - to set a new goal \n c - to cancel the last goal \n")
 
         command = input("What do you want to do?: ")
@@ -83,9 +82,12 @@ def parameters_client_main():
         goal.target_pose.pose.position.y = rospy.get_param('/des_pos_y')
         
         # Handling inputs
+        
+        # the user wants to set a new goal
         if command == 'y':
             rospy.loginfo("Last goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
-
+            
+            # get the input and check their consistency
             while True:
                 input_x = input("Enter desired position x: ")
                 try:
@@ -104,7 +106,7 @@ def parameters_client_main():
                 except:
                     print("Invalid input, enter a number")
 
-            # Set ros parameters
+            # Update ros parameters
             rospy.set_param('/des_pos_x', input_x)
             rospy.set_param('/des_pos_y', input_y)
 
@@ -112,27 +114,37 @@ def parameters_client_main():
             goal.target_pose.pose.position.x = input_x
             goal.target_pose.pose.position.y = input_y
 
+            # send goal to the service
             client.send_goal(goal)
             rospy.loginfo("Actual goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
 
 
-        # Cancel the goal
+        # The user wants to cancel the goal
         elif command == 'c':
-
+            
+            # if the goal has not been already reached
             if reached == False:
+            
                 # Check if the client is in the ACTIVE state before canceling
                 if client.get_state() == actionlib.GoalStatus.ACTIVE:
+                    
+                    # if goal not reached and goal in active state cancel the goal
                     client.cancel_goal()
                     rospy.loginfo("Goal cancelled")
                 else:
+                
+                    # if the goal is not active (simulation just started) can't cancel it
                     rospy.loginfo("Goal is not active, cannot be cancelled")
+                    
             elif reached == True:
+                # goal reached, can't cancel it
                 rospy.loginfo("Goal already reached, can't be canceled")
 
+        # The user digits neither y nor c
         else:
             rospy.loginfo("Invalid input")
 
-# callback to get the state
+# callback to get the state --> used to check if goal cancellable
 def on_sub_result(action_result):
     global reached
     reached = not (action_result.status.status == action_result.status.SUCCEEDED or action_result.status.status == action_result.status.PREEMPTED)
