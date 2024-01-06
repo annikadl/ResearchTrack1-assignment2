@@ -37,7 +37,7 @@ from actionlib_msgs.msg import GoalStatus
 
 
 pub = None
-reached = False
+#reached = False
 first_start = 0
 
 ###### PUBLISHER
@@ -66,7 +66,8 @@ def publisher_node(msg):
 
 ####### CLIENT
 def parameters_client_main():
-    global reached, first_start
+    #global reached
+    global first_start
 
     # Create an action client
     client = actionlib.SimpleActionClient('/reaching_goal', assignment_2_2023.msg.PlanningAction)
@@ -86,7 +87,7 @@ def parameters_client_main():
         
         # the user wants to set a new goal
         if command == 'y':
-            rospy.loginfo("Last goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
+            #rospy.loginfo("Last goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
             
             # get the input and check their consistency
             while True:
@@ -117,7 +118,7 @@ def parameters_client_main():
 
             # send goal to the service
             client.send_goal(goal)
-            rospy.loginfo("Actual goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
+            rospy.loginfo("Inserted goal: des_x = %f, des_y = %f", goal.target_pose.pose.position.x, goal.target_pose.pose.position.y)
             
             # update variable to handle cancel operation as soon as simulation starts
             # after inserting the first goal, first_start condition is always set to false
@@ -130,15 +131,16 @@ def parameters_client_main():
             # check variable to handle cancel operation as soon as simulation starts
             # after inserting the first goal, first_start condition is always set to false
             if first_start == 0:
-                rospy.loginfo("Goal has not been already set, can't cancel")
+                rospy.loginfo("Goal has not been already set, cannot cancel it")
                 
-            elif not reached:
-                # Cancel the goal only if it has not been already reached
-                client.cancel_goal()
-                rospy.loginfo("Goal cancelled")
+            elif client.get_state() == actionlib.GoalStatus.ACTIVE:
+
+                    # if goal not reached and goal in active state cancel the goal
+                    client.cancel_goal()
+                    rospy.loginfo("Goal cancelled")    
             
             else:
-                rospy.loginfo("Goal already reached, can't be canceled")
+                rospy.loginfo("Goal already reached, cannot cancel it")
 
         # The user digits neither y nor c
         else:
@@ -146,11 +148,11 @@ def parameters_client_main():
 
 
 # callback to get the state --> used to check if goal cancellable
-def on_sub_result(action_result):
-    global reached
+#def on_sub_result(action_result):
+#    global reached
         
     # Check if the goal is either succeeded or preempted
-    reached = action_result.status.status in [GoalStatus.SUCCEEDED, GoalStatus.PREEMPTED]
+    #reached = action_result.status.status in [GoalStatus.SUCCEEDED, GoalStatus.PREEMPTED]
 
 
 
@@ -166,7 +168,7 @@ def main():
     sub_from_Odom = rospy.Subscriber("/odom", Odometry, publisher_node)
 
     # SUBSCRIBER: get from PlanningActionResult a parameter to know whether the goal has been reached or not
-    sub_from_result = rospy.Subscriber("/reaching_goal/result", PlanningActionResult, on_sub_result)
+    #sub_from_result = rospy.Subscriber("/reaching_goal/result", PlanningActionResult, on_sub_result)
 
     # Calling the action client
     parameters_client_main()
