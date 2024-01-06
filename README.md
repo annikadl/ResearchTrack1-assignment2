@@ -53,10 +53,11 @@ Firstly, the action client is activated and waits for the server. Once the serve
 
 If the user chooses to set a new goal, the target values, both x and y positions, are taken from the keyboard and the script checks whether they are float or not; if not the user can insert them again. Then the values are stored in such `input_x` and `input_y` variables and the ros parameters `des_pos_x` and `des_pos_y` are updated too, by using `rospy.set_param('/des_pos_x', input_x)` and  `rospy.set_param('/des_pos_y', input_y)`.  In conclusion, the goal is sent to the server.
 
-On the other hand, if the user chooses to cancel the goal, some singular situations must be handled. If the goal is has never been entered or it has already been reached, it does not make sense to cancel it. To avoid this kind of scenario, the global bool variable `reached` (provided by the `on_sub_result` callback) is used: if this value is `True`, the goal is not cancelled and the user is told the goal is not active anymore and therefore cannot be removed. In all the other scenarios, the goal is correctly removed by using the command `client.cancel_goal()` and suddenly the robot stops. 
-
-#### on_sub_result
-This function is the callback of the `sub_from_result` subscriber, which subscribes to the `/reaching_goal/result` topic, to get the result of the task associated with the goal. The callback stores in a variable called `reached` whether the goal has been succesfully reached or not.
+On the other hand, if the user chooses to cancel the goal, some singular situations must be handled. If the goal has never been entered or it has already been reached, it does not make sense to cancel it. To avoid this kind of scenario, two methods were implemented:
+* the global variable `first_start` is used to check if the target has ever been set; if not it cannot be cancelled.
+* the status of the goal is checked: if it is not active, namely that the status is either "succeded" or "preempted", the goal cannot be cancelled.
+Both checks provide the user with a brief explanation by printing why the goal cannot be cancelled.
+In all the other scenarios, the goal is correctly removed by using the command `client.cancel_goal()` and suddenly the robot stops. 
 
 #### publisher_node
 The `publisher_node` function is used to create and publish a custom message containing the actual position (x,y) and velocity (linear, angular) of the robot. This function represents the callback of a subscriber, which takes the required information subscribing to the topic `odom`.
