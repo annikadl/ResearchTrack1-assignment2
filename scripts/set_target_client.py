@@ -3,7 +3,7 @@
 """
 This is the action server that satisfies the request: implement an action client, 
 allowing the user to set a target point or to cancel it (this node also uses the 
-feedback/status of the action server to know when the target has been reached); 
+status of the goal to know when the target has been reached); 
 this node also publishes robot position and velocity as a custom message.
 
 It implements different functions.
@@ -12,11 +12,6 @@ set_client_parameters() implements an action client, which also provides a user
 interface, running on a separate terminal, to let the user choose from the terminal either to:
 * set a new target point that the robot must reach.
 * cancel the goal previously chosen.
-
-on_sub_result() is the callback of the sub_from_result subscriber, which subscribes
-to the /reaching_goal/result topic, to get the result of the task associated with 
-the goal. The callback stores in a variable called `reached` whether the goal has 
-been succesfully reached or not.
 
 The publisher_node() function is used to create and publish a custom message containing 
 the actual position (x,y) and velocity (linear, angular) of the robot. This function 
@@ -37,7 +32,6 @@ from actionlib_msgs.msg import GoalStatus
 
 
 pub = None
-#reached = False
 first_start = 0
 
 ###### PUBLISHER
@@ -147,15 +141,6 @@ def parameters_client_main():
             rospy.loginfo("Invalid input")
 
 
-# callback to get the state --> used to check if goal cancellable
-#def on_sub_result(action_result):
-#    global reached
-        
-    # Check if the goal is either succeeded or preempted
-    #reached = action_result.status.status in [GoalStatus.SUCCEEDED, GoalStatus.PREEMPTED]
-
-
-
 def main():
     rospy.init_node('set_target_client')
 
@@ -166,9 +151,6 @@ def main():
 
     # SUBSCRIBER: get from "Odom" two parameters (velocity and position)
     sub_from_Odom = rospy.Subscriber("/odom", Odometry, publisher_node)
-
-    # SUBSCRIBER: get from PlanningActionResult a parameter to know whether the goal has been reached or not
-    #sub_from_result = rospy.Subscriber("/reaching_goal/result", PlanningActionResult, on_sub_result)
 
     # Calling the action client
     parameters_client_main()
