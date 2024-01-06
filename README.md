@@ -41,7 +41,7 @@ The nodes that must be implemented are:
 To conclude, a launch file to start the whole simulation must be implemented. It also must include a parameter to select the size of the averaging window of the last node.
 
 ### set_target_client.py
-`set_target_client.py` is the action server that satisfies the first request. It consists of different functions.
+`set_target_client.py` is the action client that satisfies the first request. It consists of different functions.
 Besides, this node is run, by the launch file, in a separate terminal, allowing the user to directly access the set-target interface. 
 
 #### set_client_parameters
