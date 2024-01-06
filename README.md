@@ -93,7 +93,7 @@ First of all, as it is possible to notice, the robot moves quite slowly; its spe
 
 The provided user interface can be modified to become more user-friendly. It can be redesigned to be more attractive, for instance by presenting a more detailed and easy-to-use menu for the user. Besides, it is possible to build commands to use services directly from the same terminal where the desired position is entered. This would make it easier for the user to interact with the robot and the simulation. Until now just one terminal for the desired position is opened, while the services must be called separately on another terminal.
 
-Furthermore, the desired goal, inserted by the user, should be graphically added to the playground. A goal marker would clarify where the goal is located and make it possible to visually check how the simulation 
+Furthermore, the desired goal, inserted by the user, should be graphically added to the playground. A goal marker would clarify where the goal is located and make it possible to visually check how the simulation is proceeding. 
 
 In order to make the simulation even more user-friendly, it should be possible to choose the goal directly from the playground, by clicking on it. In addition, non-performable goals should not be eligible, such as points that do not belong to the playground or points belonging to the obstacles.
 Besides, the possibility of choosing multiple goals to create a path that the robot must follow can be implemented too. 
