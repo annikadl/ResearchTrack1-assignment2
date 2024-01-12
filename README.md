@@ -17,7 +17,7 @@ At this point the simulator has started, the program is running and a mobile rob
 
 N.B. If the scripts are not found, go to the `scripts` folder and run the command `chmod +x *.py`. Then try again to run `roslaunch assignment_2_2023 assignment1.launch`.
 
-It is important to notice (this topic is also better explained later) that the launch file `assignment1.launch`, not only runs the environment but also all the nodes of the assignment`. By knowing that, to run just a single node the command `rosrun assignment_2_2023 _NodeName.py_` must be used.
+It is important to notice (this topic is also better explained later) that the launch file `assignment1.launch`, not only runs the environment but also all the nodes of the assignment. By knowing that, to run just a single node the command `rosrun assignment_2_2023 _NodeName.py_` must be used.
 
 The playground is represented by a squared arena in which the robot can move. Besides, some walls around and inside the playground obstruct the robot's motion.
 
