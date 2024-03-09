@@ -60,7 +60,9 @@ import assignment_2_2023.msg
 from assignment_2_2023.msg import Vel
 from assignment_2_2023.srv import Last_target, Last_targetResponse
 
-
+# \brief This function is the callback of the subscriber to the topic /pos_vel. It takes the last target from the ros parameters.
+# \param msg: custom message containing the actual position and velocity of the robot
+# \return None
 def get_last_target(msg):
     global last_des_x, last_des_y
 
@@ -71,7 +73,9 @@ def get_last_target(msg):
     
     #print("Last input target is des_x = %f, des_y = %f" % (last_des_x, last_des_y))
     
-    
+# \brief This function is the callback of the service /last_target. It returns the last target entered by the user.
+# \param s: service request
+# \return response: service response containing the last target entered by the user    
 def result_callback(s):
     global last_des_x, last_des_y 
     
@@ -81,8 +85,10 @@ def result_callback(s):
     response.last_target_y = last_des_y
     
     return response
-    	    
 
+# \brief This function initializes the node last_target_service            
+# \param None
+# \return None
 def last_target_service():
     rospy.init_node('last_target_service')
     rospy.loginfo("Last target node initialized")
