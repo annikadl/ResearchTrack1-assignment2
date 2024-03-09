@@ -1,0 +1,78 @@
+This is the second assignment for the Research Track 1 exam for the Robotics Engineering Master\textquotesingle{}s degree at the University of Genoa.\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{Simulator}\label{md__r_e_a_d_m_e_autotoc_md1}
+The assignment takes place in Gazebo, a 3D R\+OS simulator. The Rviz tool is also used to provide a model of the simulator robot, including sensors, to help the user debug the robot application.
+
+To run the environment, namely, the windows mentioned above Gazebo and Rviz, complete the following procedure (If you do not have already installed R\+OS on your computer, you can download and install the Noetic version used in this assignment at \href{https://wiki.ros.org/noetic/Installation}{\texttt{ https\+://wiki.\+ros.\+org/noetic/\+Installation}}).
+
+Steps\+:
+\begin{DoxyItemize}
+\item open at least two terminals.
+\item in the first one, move into your R\+OS workspace and run the R\+OS master with the command {\ttfamily roscore}.
+\item move to the second terminal and choose where to clone the repository
+\item clone this repository with the command {\ttfamily git clone \+\_\+url\+\_\+}.
+\item move into the directory
+\item run the command {\ttfamily roslaunch assignment\+\_\+2\+\_\+2023 assignment1.\+launch} to start the simulation. At this point the simulator has started, the program is running and a mobile robot is spawned in the center of the playground.
+\end{DoxyItemize}
+
+N.\+B. If the scripts are not found, go to the {\ttfamily scripts} folder and run the command {\ttfamily chmod +x $\ast$.py}. Then try again to run {\ttfamily roslaunch assignment\+\_\+2\+\_\+2023 assignment1.\+launch}.
+
+It is important to notice (this topic is also better explained later) that the launch file {\ttfamily assignment1.\+launch}, not only runs the environment but also all the nodes of the assignment{\ttfamily . By knowing that, to run just a single node the command}rosrun assignment\+\_\+2\+\_\+2023 {\itshape Node\+Name.\+py}\`{} must be used.
+
+The playground is represented by a squared arena in which the robot can move. Besides, some walls around and inside the playground obstruct the robot\textquotesingle{}s motion.\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{Already implemented nodes}\label{md__r_e_a_d_m_e_autotoc_md2}
+Some nodes were already implemented by the Professor of the course. These nodes aim to plan the motion of the robot.
+
+Node {\ttfamily wall\+\_\+follow\+\_\+service.\+py} is used to let the robot follow a wall, for instance, to circumnavigate it. This node also processes data to detect obstacles and avoid them\+: if an obstacle is detected on the front, the node makes the robot rotate until there are no obstacles perceived. The same behaviour is implemented for obstacles on the right and the left.
+
+Node {\ttfamily go\+\_\+to\+\_\+point\+\_\+service\+\_\+service.\+py} implements a finite state machine that controls whether the robot behaves correctly and lets it move towards a specified point. It also checks if and when the robot successfully reaches the goal.
+
+Node {\ttfamily bug\+\_\+as.\+py} is an action server used to decide the robot\textquotesingle{}s behaviour according to a function {\ttfamily change\+\_\+state}, responsible for switching the robot states. This function lets activate or deactivate specific behaviour such as {\ttfamily go\+\_\+to\+\_\+point} or {\ttfamily wall\+\_\+following}. Besides, it imports messages and services, also from the other nodes, to facilitate communication between different components of the simulation system. These include messages for laser scan data, odometry information, twist commands for velocity control, and services for switching between navigation modes. Callback functions are implemented to process data, updating the robot\textquotesingle{}s position and orientation. The {\ttfamily planning} function is used as a callback for the action server, implementing the robot\textquotesingle{}s goal-\/planning behaviour. It considers obstacles in the environment.
+
+Besides, a launch file {\ttfamily assignment1.\+launch} to run the whole simulation, both scripts and environment, is provided.\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysection{The assignment}\label{md__r_e_a_d_m_e_autotoc_md3}
+The assignment requires handling long-\/running tasks\+: until now, when the robot is moving the user cannot do anything. The nodes that must be implemented are\+:
+\begin{DoxyItemize}
+\item an action client, allowing the user to set a target point or to cancel it (this node also uses the feedback/status of the action server to know when the target has been reached); this node also publishes robot position and velocity as a custom message.
+\item a service node that, when called, returns the coordinates of the last target sent by the user.
+\item a service node that subscribes to the robot\textquotesingle{}s position and velocity and implements a server to retrieve the distance of the robot from the target and the robot\textquotesingle{}s average speed. To conclude, a launch file to start the whole simulation must be implemented. It also must include a parameter to select the size of the averaging window of the last node.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{set\+\_\+target\+\_\+client.\+py}\label{md__r_e_a_d_m_e_autotoc_md4}
+{\ttfamily set\+\_\+target\+\_\+client.\+py} is the action client that satisfies the first request. It consists of different functions. Besides, this node is run, by the launch file, in a separate terminal, allowing the user to directly access the set-\/target interface.\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysubsubsection{set\+\_\+client\+\_\+parameters}\label{md__r_e_a_d_m_e_autotoc_md5}
+This function implements an action client, which also provides a user interface, running on a separate terminal, to let the user choose from the terminal either to\+:
+\begin{DoxyItemize}
+\item set a new target point that the robot must reach.
+\item cancel the goal previously chosen.
+\end{DoxyItemize}
+
+Firstly, the action client is activated and waits for the server. Once the server is running too, the goal position is extracted from {\ttfamily assignment\+\_\+2\+\_\+2023.\+msg.\+Planning\+Goal()}; The type of the goal is specified by the {\ttfamily Planning.\+action} action file, which, indeed, defines the types of the goal that the action client sends to the action servers and the result and feedback that the action server sends back to the client.
+
+If the user chooses to set a new goal, the target values, both x and y positions, are taken from the keyboard and the script checks whether they are float or not; if not the user can insert them again. Then the values are stored in such {\ttfamily input\+\_\+x} and {\ttfamily input\+\_\+y} variables and the ros parameters {\ttfamily des\+\_\+pos\+\_\+x} and {\ttfamily des\+\_\+pos\+\_\+y} are updated too, by using `rospy.\+set\+\_\+param('/des\+\_\+pos\+\_\+x\textquotesingle{}, input\+\_\+x){\ttfamily and}rospy.\+set\+\_\+param(\textquotesingle{}/des\+\_\+pos\+\_\+y\textquotesingle{}, input\+\_\+y)\`{}. In conclusion, the goal is sent to the server.
+
+On the other hand, if the user chooses to cancel the goal, some singular situations must be handled. If the goal is has never been entered or it has already been reached, it does not make sense to cancel it. To avoid this kind of scenario, the global bool variable {\ttfamily reached} (provided by the {\ttfamily on\+\_\+sub\+\_\+result} callback) is used\+: if this value is {\ttfamily True}, the goal is not cancelled and the user is told the goal is not active anymore and therefore cannot be removed. In all the other scenarios, the goal is correctly removed by using the command {\ttfamily client.\+cancel\+\_\+goal()} and suddenly the robot stops.\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysubsubsection{on\+\_\+sub\+\_\+result}\label{md__r_e_a_d_m_e_autotoc_md6}
+This function is the callback of the {\ttfamily sub\+\_\+from\+\_\+result} subscriber, which subscribes to the {\ttfamily /reaching\+\_\+goal/result} topic, to get the result of the task associated with the goal. The callback stores in a variable called {\ttfamily reached} whether the goal has been succesfully reached or not.\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysubsubsection{publisher\+\_\+node}\label{md__r_e_a_d_m_e_autotoc_md7}
+The {\ttfamily publisher\+\_\+node} function is used to create and publish a custom message containing the actual position (x,y) and velocity (linear, angular) of the robot. This function represents the callback of a subscriber, which takes the required information subscribing to the topic {\ttfamily odom}.\hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysubsection{last\+\_\+target\+\_\+service.\+py}\label{md__r_e_a_d_m_e_autotoc_md8}
+{\ttfamily last\+\_\+target\+\_\+service.\+py} is a node implementing a service that, when called, returns the values of the last target sent by the user. To make it feasible, a srv file {\ttfamily Last\+\_\+target.\+srv} is created in the so-\/called directory; it contains the expected service response type. The last target values are extracted from the ros parameters updated from the {\ttfamily set\+\_\+target\+\_\+client,py} and returned as response from the service. If the service is called before the user sets a target, the response gives the default values ({\ttfamily /des\+\_\+pos\+\_\+x = 0.\+0} and {\ttfamily des\+\_\+pos\+\_\+y = 1.\+0}) chosen in the launch file {\ttfamily assignment1.\+launch}.
+
+Furthermore, this service is run by the launch file; to call it and get the last target sent by the user run the command {\ttfamily rosservice call /last\+\_\+target} on the terminal.\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysubsection{info\+\_\+service.\+py}\label{md__r_e_a_d_m_e_autotoc_md9}
+{\ttfamily info\+\_\+service,py} is a node implementing a service that, when called, returns the distance from the goal and the average velocity of the robot. To make it feasible, a srv file {\ttfamily info\+\_\+service.\+srv} is created in the so-\/called directory; it contains the expected service response type. A subscriber is implemented and its callback takes the target position from the ros parameters and the actual one from the custom message sent by the {\ttfamily set\+\_\+target\+\_\+client.\+py}. The distance is computed as the Euclidean distance by using the Python built-\/in function {\ttfamily math.\+dist(des\+\_\+coordinates, actual coordinates)} by importing {\ttfamily math} library. The velocity values are extracted by the custom message too, they are collected in a list of dimension {\ttfamily window\+\_\+size} with a default value of 10 (that can be modified in the launch file). Then the average velocity is computed as {\ttfamily average\+\_\+vel\+\_\+x = sum(vel\+\_\+data) / min(len(vel\+\_\+data), velocity\+\_\+window\+\_\+size)}. These values compose the response of the service.
+
+As for {\ttfamily last\+\_\+target\+\_\+service.\+py}, {\ttfamily info\+\_\+service.\+py} is run by the launch file and the service can be called by using the command {\ttfamily rosservice call /info\+\_\+service} on the terminal.\hypertarget{md__r_e_a_d_m_e_autotoc_md10}{}\doxysubsection{assignment1.\+launch}\label{md__r_e_a_d_m_e_autotoc_md10}
+{\ttfamily assignment1.\+launch} is the launch file that provides the possibility of running the whole simulation, including both the scripts and the environment, by using just one command\+: {\ttfamily roslaunch assignment\+\_\+2\+\_\+2023 assignment1.\+launch}.
+
+In the launch file\+:
+\begin{DoxyItemize}
+\item the ros parameters {\ttfamily /des\+\_\+pos\+\_\+x}, {\ttfamily /des\+\_\+pos\+\_\+y} and {\ttfamily /window\+\_\+size} are defined and can be easily modified.
+\item Gazebo and Rviz tools are launched.
+\item All the scripts previously mentioned are launched too.
+\item The {\ttfamily set\+\_\+target\+\_\+client.\+py} is launched in a different terminal, to allow the user to easily set the target, by adding {\ttfamily launch-\/prefix=\char`\"{}lxterminal -\/e\char`\"{}} to the respective node tag.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md11}{}\doxysection{Flowchart}\label{md__r_e_a_d_m_e_autotoc_md11}
+\href{https://mermaid.live/edit\#pako:eNp1VU1z2jAQ_SsaXXqBFENCCJ1pJ0DSU0_t9FC74xHyAprYkkeSIRT4713JdiyTloORV_vx3ltpfaJcZUDndDgcJtIKm8OcGLCpZXqLfzwXIO1NeUyk90jkJlcHvmPakh-LT4kk-DPVeqtZuSMFE7I2ud9j_C4R6XYl1iVCCitYLgxkv-stkFm9qJ-PZDj8TMoofONRIsP3RXQF413ZruoiZtwKJUmDRxjCWZ5DRpjMyIEJa8hG6QCn3QFpYgzoPWhSoU45ET7Y7eyZfYPva4xdkYrlZKvwgV6WvYAkG60KopUhJdOsAAvaBHU-ZmDSUpn0tVseyUHYHclgw6rckj3LKzBBpeVppcB4iJ2xQpjIpCe2VU4UwmpEnR2Z4hZnkoNj9OUSsIhi106yqWSjGOoUAu5YNCqnzj_UIarbE8QsvGEcWsbOtAwsSxd1Rrhnsoqdcp4fSiI0tgllER4OM3h6ysoGBVe-3iqKqzLDntRkXV_7oocRNcTn-Dueu9of9ei1O_B-rvkk8hpsLeCZPJ2WTHq4VzqvoREZT1oo8pPPeD6CweAU_2IX3JzNOsL8K58j5cxarZUlxqoyZOUztVh7pc5SDbp8O9SQ5RpYdkSEIDuMDs2G5Qai-KvzxI0P1rHQUKh977S3jr7eMtTmyXO7rugS9Yr6TrdZwvh27UfC1RUvqzVOjR3o1M2R4FBGMfoYrkXpe4jdxDHQXuKqJ2J3lFDNPeSKC3sMmJXjmCNOi1oy8hMvSAHGsC2ELpO4RVL3qXEhxdFfYMycYuYwIkJVSnfoy8n_6SmZ4jrVYPDed8H8PTu-A_5CDjvA6tdj663JXmekgs6Zu_NShdeGj9sLs1YqxymjBVvn0AYMeqMlc0VfpDoQsWlmYE9RI1xoM29aEGExx5-PA-p0QAvQODsy_Ayd3EZCMbCAhM5x2Qy_hCbygq6ssur7UXI69wdmQGvoK8FQueLNCpmwSn-rv23-EzegJZO_lEIfqyvwr3R-oq90fj-9uZ-NRtHdwyia3k0G9Ejn0WhyczubTGejyX2Ei9llQP_46NGN8x3PHmbT2-loNBk_XP4CFwo6Rw}{\texttt{ }}\hypertarget{md__r_e_a_d_m_e_autotoc_md12}{}\doxysection{Possible improvements}\label{md__r_e_a_d_m_e_autotoc_md12}
+This project has several possible improvements.
+
+First of all, as it is possible to notice, the robot moves quite slowly; its speed can be increased to achieve a faster and smoother simulation. However, the speed increase must be feasible also in the real world, namely, it is required to not exceed physical boundaries.
+
+The provided user interface can be modified to become more user-\/friendly. It can be redesigned to be more attractive, for instance by presenting a more detailed and easy-\/to-\/use menu for the user. Besides, it is possible to build commands to use services directly from the same terminal where the desired position is entered. This would make it easier for the user to interact with the robot and the simulation. Until now just one terminal for the desired position is opened, while the services must be called separately on another terminal.
+
+Furthermore, the desired goal, inserted by the user, should be graphically added to the playground. A goal marker would clarify where the goal is located and make it possible to visually check how the simulation
+
+In order to make the simulation even more user-\/friendly, it should be possible to choose the goal directly from the playground, by clicking on it. In addition, non-\/performable goals should not be eligible, such as points that do not belong to the playground or points belonging to the obstacles. Besides, the possibility of choosing multiple goals to create a path that the robot must follow can be implemented too.
+
+When encountering obstacles, the robot \char`\"{}autonomously\char`\"{} chooses the direction along which follows the wall. To improve performance, the chosen direction should be the one that belongs to the shortest path to the goal.
+
+To conclude, although several improvements are possible, the project fully accomplishes the required tasks. 

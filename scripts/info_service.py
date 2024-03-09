@@ -1,3 +1,27 @@
+## @assignment_2_2023 info_service.py
+# \file info_service.py
+# \brief This is a service node that subscribes to the robot's position and velocity (using the custom message) and implements a server to retrieve the distance of the robot from the target and the robot's average speed.
+# \author Annika Delucchi
+# \version 1.0
+# \date    9/03/2024
+#
+# \details
+#
+# Subscribes to: <BR>
+#    ° /pos_vel: custom message containing the actual position and velocity of the robot
+#
+# Publishes to: <BR>
+#    ° None    
+#
+# Services: <BR>
+#    ° /info_service: service to get the distance of the robot from the target and the robot's average speed
+#
+
+
+
+
+
+
 #!/usr/bin/env python
 
 """

@@ -1,3 +1,40 @@
+## @assignment_2_2023 last_target_service.py
+# /file last_target_service.py
+# /brief This node implements a service that, when called, returns the values of the last target sent by the user.
+# /author Annika Delucchi
+# /version 1.0
+# /date    9/03/2024
+#
+# /details
+#
+# Subscribes to: <BR>
+#    ° /pos_vel: custom message containing the actual position and velocity of the robot
+#
+# Publishes to: <BR>
+#    ° None
+#
+# Services: <BR>
+#    ° /last_target: service to get the last target
+#
+# Description: <BR>
+# last_target_service.py is a node implementing a service that, when called, returns 
+# the values of the last target sent by the user. 
+# <BR>
+# To make it feasible, a srv file Last_target.srv is created in the so-called directory; it
+# contains the expected service response type. 
+# <BR>
+# The last target values are extracted from the ros parameters updated from the
+# set_target_client,py and returned as response from the service. 
+# <BR>
+# If the service is called before the user sets a target, the response gives the default
+# values(/des_pos_x = 0.0 and des_pos_y = 1.0) chosen in the launch file assignment1.launch.
+# <BR>
+# Furthermore, this service is run by the launch file; to call it and get the last target sent by
+# the user run the command rosservice call /last_target on the terminal.
+#
+##
+
+
 #!/usr/bin/env python
 
 """

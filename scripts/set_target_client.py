@@ -1,3 +1,23 @@
+## @assignment_2_2023 set_target_client
+# \brief This is the action server that allows the user to set a target point or to cancel it
+# \author Annika Delucchi
+# \version 1.0
+# \date    9/03/2024
+#
+# \details
+#
+# Subscribes to: <BR>
+#    ° /odom: topic to get the actual position and velocity of the robot
+#
+# Publishes to: <BR>
+#    ° /pos_vel: custom message containing the actual position and velocity of the robot
+#
+# Services: <BR>
+#    ° None
+
+
+
+
 #!/usr/bin/env python
 
 """
