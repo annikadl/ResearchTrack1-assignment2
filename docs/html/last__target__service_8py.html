@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>assignment_2_2023: scripts/last_target_service.py File Reference</title>
+<title>Research Track 1 Assignment2 2023: scripts/last_target_service.py File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,10 +21,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">assignment_2_2023
+   <div id="projectname">Research Track 1 Assignment2 2023
    &#160;<span id="projectnumber">1.0</span>
    </div>
-   <div id="projectbrief">Documentation for the second assignment of RT1 course</div>
+   <div id="projectbrief">This is the documentation for the second assignment of the Research Track 1 course at the University of Genoa</div>
   </td>
  </tr>
  </tbody>
@@ -79,14 +79,15 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a514f8949a5c045d861f31ee39181effd"><td class="memItemLeft" align="right" valign="top"><a id="a514f8949a5c045d861f31ee39181effd"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>last_target_service.get_last_target</b> (msg)</td></tr>
+<tr class="memitem:a514f8949a5c045d861f31ee39181effd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="last__target__service_8py.html#a514f8949a5c045d861f31ee39181effd">last_target_service.get_last_target</a> (msg)</td></tr>
+<tr class="memdesc:a514f8949a5c045d861f31ee39181effd"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is the callback of the subscriber to the topic /pos_vel.  <a href="last__target__service_8py.html#a514f8949a5c045d861f31ee39181effd">More...</a><br /></td></tr>
 <tr class="separator:a514f8949a5c045d861f31ee39181effd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1bf8d1a45d42e6eb96a5b2ddd2cce537"><td class="memItemLeft" align="right" valign="top"><a id="a1bf8d1a45d42e6eb96a5b2ddd2cce537"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>last_target_service.result_callback</b> (s)</td></tr>
+<tr class="memitem:a1bf8d1a45d42e6eb96a5b2ddd2cce537"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="last__target__service_8py.html#a1bf8d1a45d42e6eb96a5b2ddd2cce537">last_target_service.result_callback</a> (s)</td></tr>
+<tr class="memdesc:a1bf8d1a45d42e6eb96a5b2ddd2cce537"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is the callback of the service /last_target.  <a href="last__target__service_8py.html#a1bf8d1a45d42e6eb96a5b2ddd2cce537">More...</a><br /></td></tr>
 <tr class="separator:a1bf8d1a45d42e6eb96a5b2ddd2cce537"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade9504f955d947b09c7a5b35682e9157"><td class="memItemLeft" align="right" valign="top"><a id="ade9504f955d947b09c7a5b35682e9157"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>last_target_service.last_target_service</b> ()</td></tr>
+<tr class="memitem:ade9504f955d947b09c7a5b35682e9157"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="last__target__service_8py.html#ade9504f955d947b09c7a5b35682e9157">last_target_service.last_target_service</a> ()</td></tr>
+<tr class="memdesc:ade9504f955d947b09c7a5b35682e9157"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function initializes the node last_target_service <br  />
+  <a href="last__target__service_8py.html#ade9504f955d947b09c7a5b35682e9157">More...</a><br /></td></tr>
 <tr class="separator:ade9504f955d947b09c7a5b35682e9157"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -100,13 +101,101 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>last_target_service.la
  ° None</p>
 <p>Services: <br  />
  ° /last_target: service to get the last target</p>
+<p>Ros parameters: <br  />
+ ° /des_pos_x: x coordinate of the last target ° /des_pos_y: y coordinate of the last target</p>
 <p>Description: <br  />
  <a class="el" href="last__target__service_8py.html" title="Service that returns the values of the last target sent by the user.">last_target_service.py</a> is a node implementing a service that, when called, returns the values of the last target sent by the user. <br  />
  To make it feasible, a srv file Last_target.srv is created in the so-called directory; it contains the expected service response type. <br  />
  The last target values are extracted from the ros parameters updated from the set_target_client,py and returned as response from the service. <br  />
  If the service is called before the user sets a target, the response gives the default values(/des_pos_x = 0.0 and des_pos_y = 1.0) chosen in the launch file assignment1.launch. <br  />
  Furthermore, this service is run by the launch file; to call it and get the last target sent by the user run the command rosservice call /last_target on the terminal. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a514f8949a5c045d861f31ee39181effd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a514f8949a5c045d861f31ee39181effd">&#9670;&nbsp;</a></span>get_last_target()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def last_target_service.get_last_target </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function is the callback of the subscriber to the topic /pos_vel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>custom message containing the actual position and velocity of the robot </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>It takes the last target from the ros parameters. </p>
+
+</div>
+</div>
+<a id="ade9504f955d947b09c7a5b35682e9157"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade9504f955d947b09c7a5b35682e9157">&#9670;&nbsp;</a></span>last_target_service()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def last_target_service.last_target_service </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function initializes the node last_target_service <br  />
+ </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">None</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>It initializes the node last_target_service and implements the service to get the last target </p>
+
+</div>
+</div>
+<a id="a1bf8d1a45d42e6eb96a5b2ddd2cce537"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bf8d1a45d42e6eb96a5b2ddd2cce537">&#9670;&nbsp;</a></span>result_callback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def last_target_service.result_callback </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function is the callback of the service /last_target. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>service request </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>response: service response containing the last target entered by the user <br  />
+</dd></dl>
+<p>It returns the last target entered by the user. If the service is called before the user sets a target, the response gives the default values(/des_pos_x = 0.0 and des_pos_y = 1.0) chosen in the launch file assignment1.launch </p>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

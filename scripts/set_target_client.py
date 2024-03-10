@@ -14,7 +14,29 @@
 #    ° /pos_vel: custom message containing the actual position and velocity of the robot
 #
 # Services: <BR>
-#    ° None
+#    ° None 
+#
+# Ros parameters: <BR>
+#    ° /des_pos_x: x coordinate of the last target <BR>
+#    ° /des_pos_y: y coordinate of the last target <BR>
+# 
+# Description: <BR>
+# This action server implements an action client, 
+# allowing the user to set a target point or to cancel it (this node also uses the 
+# status of the goal to know when the target has been reached); 
+# this node also publishes robot position and velocity as a custom message. <BR>
+#
+# It implements different functions. <BR>
+#
+# set_client_parameters() implements an action client, which also provides a user 
+# interface, running on a separate terminal, to let the user choose from the terminal either to: <BR>
+#    ° set a new target point that the robot must reach. <BR>
+#    ° cancel the goal previously chosen. <BR>
+#
+# The publisher_node() function is used to create and publish a custom message containing 
+# the actual position (x,y) and velocity (linear, angular) of the robot. This function 
+# represents the callback of a subscriber, which takes the required information subscribing to the topic `odom`.
+
 
 
 #!/usr/bin/env python
@@ -53,9 +75,12 @@ from actionlib_msgs.msg import GoalStatus
 pub = None
 first_start = 0
 
-# \brief This function is the callback of the subscriber to the topic /odom. It takes the actual position and velocity of the robot and publishes them as a custom message.
+##
+# \brief This function is the callback of the subscriber to the topic /odom.
 # \param msg is the message received from the topic /odom
 # \return None
+#
+# It takes the actual position and velocity of the robot and publishes them as a custom message.
 def publisher_node(msg):
     # Create a publisher
     global pub
@@ -78,10 +103,14 @@ def publisher_node(msg):
     # Set the publishing rate (e.g., 1 Hz)
     # rate = rospy.Rate(0.1)  # 1 Hz
 
-
-# \brief This function implements an action client, which also provides a user interface, running on a separate terminal, to let the user choose from the terminal either to: set a new target point that the robot must reach andcancel the goal previously chosen.
+##
+# \brief This function implements an action client
 # \param None
 # \return None
+#
+# It also provides a user interface, running on a separate terminal, to let the user choose from the terminal either to:
+# ° set a new target point that the robot must reach.
+# ° cancel the goal previously chosen.
 def parameters_client_main():
     #global reached
     global first_start
@@ -163,7 +192,12 @@ def parameters_client_main():
         else:
             rospy.loginfo("Invalid input")
 
-
+##
+# \brief This function initializes the node set_target_client
+# \param None
+# \return None
+#
+# It initializes the node set_target_client and implements the subscriber to the topic /odom and the action client.
 def main():
     rospy.init_node('set_target_client')
 

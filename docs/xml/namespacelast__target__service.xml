@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="namespacelast__target__service" kind="namespace" language="Python">
+    <compoundname>last_target_service</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="last__target__service_8py_1a514f8949a5c045d861f31ee39181effd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def last_target_service.get_last_target</definition>
+        <argsstring>(msg)</argsstring>
+        <name>get_last_target</name>
+        <param>
+          <type>msg</type>
+          <defname>msg</defname>
+        </param>
+        <briefdescription>
+<para>This function is the callback of the subscriber to the topic /pos_vel. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>custom message containing the actual position and velocity of the robot </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>None</para>
+</simplesect>
+It takes the last target from the ros parameters. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/last_target_service.py" line="72" column="1" bodyfile="scripts/last_target_service.py" bodystart="72" bodyend="81"/>
+      </memberdef>
+      <memberdef kind="function" id="last__target__service_8py_1a1bf8d1a45d42e6eb96a5b2ddd2cce537" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def last_target_service.result_callback</definition>
+        <argsstring>(s)</argsstring>
+        <name>result_callback</name>
+        <param>
+          <type>s</type>
+          <defname>s</defname>
+        </param>
+        <briefdescription>
+<para>This function is the callback of the service /last_target. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>s</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>service request </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>response: service response containing the last target entered by the user <linebreak/>
+</para>
+</simplesect>
+It returns the last target entered by the user. If the service is called before the user sets a target, the response gives the default values(/des_pos_x = 0.0 and des_pos_y = 1.0) chosen in the launch file assignment1.launch </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/last_target_service.py" line="89" column="1" bodyfile="scripts/last_target_service.py" bodystart="89" bodyend="98"/>
+      </memberdef>
+      <memberdef kind="function" id="last__target__service_8py_1ade9504f955d947b09c7a5b35682e9157" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def last_target_service.last_target_service</definition>
+        <argsstring>()</argsstring>
+        <name>last_target_service</name>
+        <briefdescription>
+<para>This function initializes the node last_target_service <linebreak/>
+ </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>None</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>None</para>
+</simplesect>
+It initializes the node last_target_service and implements the service to get the last target </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/last_target_service.py" line="105" column="1" bodyfile="scripts/last_target_service.py" bodystart="105" bodyend="116"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="scripts/last_target_service.py" line="1" column="1"/>
+  </compounddef>
+</doxygen>

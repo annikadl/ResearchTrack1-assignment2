@@ -8,15 +8,13 @@ Service that returns the values of the last target sent by the user.
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{last__target__service_8py_a514f8949a5c045d861f31ee39181effd}\label{last__target__service_8py_a514f8949a5c045d861f31ee39181effd}} 
-def {\bfseries last\+\_\+target\+\_\+service.\+get\+\_\+last\+\_\+target} (msg)
-\item 
-\mbox{\Hypertarget{last__target__service_8py_a1bf8d1a45d42e6eb96a5b2ddd2cce537}\label{last__target__service_8py_a1bf8d1a45d42e6eb96a5b2ddd2cce537}} 
-def {\bfseries last\+\_\+target\+\_\+service.\+result\+\_\+callback} (s)
-\item 
-\mbox{\Hypertarget{last__target__service_8py_ade9504f955d947b09c7a5b35682e9157}\label{last__target__service_8py_ade9504f955d947b09c7a5b35682e9157}} 
-def {\bfseries last\+\_\+target\+\_\+service.\+last\+\_\+target\+\_\+service} ()
-\end{DoxyCompactItemize}
+def \mbox{\hyperlink{last__target__service_8py_a514f8949a5c045d861f31ee39181effd}{last\+\_\+target\+\_\+service.\+get\+\_\+last\+\_\+target}} (msg)
+\begin{DoxyCompactList}\small\item\em This function is the callback of the subscriber to the topic /pos\+\_\+vel. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{last__target__service_8py_a1bf8d1a45d42e6eb96a5b2ddd2cce537}{last\+\_\+target\+\_\+service.\+result\+\_\+callback}} (s)
+\begin{DoxyCompactList}\small\item\em This function is the callback of the service /last\+\_\+target. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{last__target__service_8py_ade9504f955d947b09c7a5b35682e9157}{last\+\_\+target\+\_\+service.\+last\+\_\+target\+\_\+service}} ()
+\begin{DoxyCompactList}\small\item\em This function initializes the node last\+\_\+target\+\_\+service ~\newline
+ \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -40,9 +38,71 @@ Publishes to\+: ~\newline
 Services\+: ~\newline
  ° /last\+\_\+target\+: service to get the last target
 
+Ros parameters\+: ~\newline
+ ° /des\+\_\+pos\+\_\+x\+: x coordinate of the last target ° /des\+\_\+pos\+\_\+y\+: y coordinate of the last target
+
 Description\+: ~\newline
  \mbox{\hyperlink{last__target__service_8py}{last\+\_\+target\+\_\+service.\+py}} is a node implementing a service that, when called, returns the values of the last target sent by the user. ~\newline
  To make it feasible, a srv file Last\+\_\+target.\+srv is created in the so-\/called directory; it contains the expected service response type. ~\newline
  The last target values are extracted from the ros parameters updated from the set\+\_\+target\+\_\+client,py and returned as response from the service. ~\newline
  If the service is called before the user sets a target, the response gives the default values(/des\+\_\+pos\+\_\+x = 0.\+0 and des\+\_\+pos\+\_\+y = 1.\+0) chosen in the launch file assignment1.\+launch. ~\newline
  Furthermore, this service is run by the launch file; to call it and get the last target sent by the user run the command rosservice call /last\+\_\+target on the terminal. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{last__target__service_8py_a514f8949a5c045d861f31ee39181effd}\label{last__target__service_8py_a514f8949a5c045d861f31ee39181effd}} 
+\index{last\_target\_service.py@{last\_target\_service.py}!get\_last\_target@{get\_last\_target}}
+\index{get\_last\_target@{get\_last\_target}!last\_target\_service.py@{last\_target\_service.py}}
+\doxysubsubsection{\texorpdfstring{get\_last\_target()}{get\_last\_target()}}
+{\footnotesize\ttfamily def last\+\_\+target\+\_\+service.\+get\+\_\+last\+\_\+target (\begin{DoxyParamCaption}\item[{}]{msg }\end{DoxyParamCaption})}
+
+
+
+This function is the callback of the subscriber to the topic /pos\+\_\+vel. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & custom message containing the actual position and velocity of the robot \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+It takes the last target from the ros parameters. \mbox{\Hypertarget{last__target__service_8py_ade9504f955d947b09c7a5b35682e9157}\label{last__target__service_8py_ade9504f955d947b09c7a5b35682e9157}} 
+\index{last\_target\_service.py@{last\_target\_service.py}!last\_target\_service@{last\_target\_service}}
+\index{last\_target\_service@{last\_target\_service}!last\_target\_service.py@{last\_target\_service.py}}
+\doxysubsubsection{\texorpdfstring{last\_target\_service()}{last\_target\_service()}}
+{\footnotesize\ttfamily def last\+\_\+target\+\_\+service.\+last\+\_\+target\+\_\+service (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This function initializes the node last\+\_\+target\+\_\+service ~\newline
+ 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+It initializes the node last\+\_\+target\+\_\+service and implements the service to get the last target \mbox{\Hypertarget{last__target__service_8py_a1bf8d1a45d42e6eb96a5b2ddd2cce537}\label{last__target__service_8py_a1bf8d1a45d42e6eb96a5b2ddd2cce537}} 
+\index{last\_target\_service.py@{last\_target\_service.py}!result\_callback@{result\_callback}}
+\index{result\_callback@{result\_callback}!last\_target\_service.py@{last\_target\_service.py}}
+\doxysubsubsection{\texorpdfstring{result\_callback()}{result\_callback()}}
+{\footnotesize\ttfamily def last\+\_\+target\+\_\+service.\+result\+\_\+callback (\begin{DoxyParamCaption}\item[{}]{s }\end{DoxyParamCaption})}
+
+
+
+This function is the callback of the service /last\+\_\+target. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & service request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+response\+: service response containing the last target entered by the user ~\newline
+
+\end{DoxyReturn}
+It returns the last target entered by the user. If the service is called before the user sets a target, the response gives the default values(/des\+\_\+pos\+\_\+x = 0.\+0 and des\+\_\+pos\+\_\+y = 1.\+0) chosen in the launch file assignment1.\+launch 

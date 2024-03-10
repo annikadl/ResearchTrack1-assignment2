@@ -8,15 +8,12 @@ Service node that subscribes to the robot\textquotesingle{}s position and veloci
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{info__service_8py_a93bf3b9a801fda070df012b3fd1c6b8a}\label{info__service_8py_a93bf3b9a801fda070df012b3fd1c6b8a}} 
-def {\bfseries info\+\_\+service.\+get\+\_\+distance\+\_\+and\+\_\+averagevelocity} (msg)
-\item 
-\mbox{\Hypertarget{info__service_8py_ad315c9610fbe13d85904aa3b3f240573}\label{info__service_8py_ad315c9610fbe13d85904aa3b3f240573}} 
-def {\bfseries info\+\_\+service.\+get\+\_\+values} (s)
-\item 
-\mbox{\Hypertarget{info__service_8py_a432bccfb09d7df31c450bfc156d07862}\label{info__service_8py_a432bccfb09d7df31c450bfc156d07862}} 
-def {\bfseries info\+\_\+service.\+info\+\_\+service\+\_\+main} ()
-\end{DoxyCompactItemize}
+def \mbox{\hyperlink{info__service_8py_a93bf3b9a801fda070df012b3fd1c6b8a}{info\+\_\+service.\+get\+\_\+distance\+\_\+and\+\_\+averagevelocity}} (msg)
+\begin{DoxyCompactList}\small\item\em This function is the callback of the subscriber to the topic /pos\+\_\+vel. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{info__service_8py_ad315c9610fbe13d85904aa3b3f240573}{info\+\_\+service.\+get\+\_\+values}} (s)
+\begin{DoxyCompactList}\small\item\em This function is the callback of the service /info\+\_\+service. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{info__service_8py_a432bccfb09d7df31c450bfc156d07862}{info\+\_\+service.\+info\+\_\+service\+\_\+main}} ()
+\begin{DoxyCompactList}\small\item\em This function initializes the node info\+\_\+service. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -39,4 +36,82 @@ Publishes to\+: ~\newline
 
 
 Services\+: ~\newline
- ° /info\+\_\+service\+: service to get the distance of the robot from the target and the robot\textquotesingle{}s average speed 
+ ° /info\+\_\+service\+: service to get the distance of the robot from the target and the robot\textquotesingle{}s average speed
+
+Ros parameters\+: ~\newline
+ ° /des\+\_\+pos\+\_\+x\+: x coordinate of the last target ~\newline
+ ° /des\+\_\+pos\+\_\+y\+: y coordinate of the last target ~\newline
+ ° /window\+\_\+size\+: size of the window used to compute the average velocity ~\newline
+
+
+Description\+: ~\newline
+ info\+\_\+service,py is a node implementing a service that, when called, returns the distance from the goal and the average velocity of the robot. ~\newline
+
+
+To make it feasible, a srv file info\+\_\+service.\+srv is created in the so-\/called directory; it contains the expected service response type. ~\newline
+
+
+A subscriber is implemented and its callback takes the target position from the ros parameters and the actual one from the custom message sent by the \mbox{\hyperlink{set__target__client_8py}{set\+\_\+target\+\_\+client.\+py}}. The distance is computed as the Euclidean distance by using the Python built-\/in function math.\+dist(des\+\_\+coordinates, actual coordinates) by importing math library. ~\newline
+ The velocity values are extracted by the custom message too, they are collected in a list of dimension window\+\_\+size with a default value of 10 (that can be modified in the launch file). Then the average velocity is computed as average\+\_\+vel\+\_\+x = sum(vel\+\_\+data) / min(len(vel\+\_\+data), velocity\+\_\+window\+\_\+size). These values compose the response of the service. ~\newline
+
+
+\mbox{\hyperlink{info__service_8py}{info\+\_\+service.\+py}} is run by the launch file and the service can be called by using the command rosservice call /info\+\_\+service on the terminal. ~\newline
+ 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{info__service_8py_a93bf3b9a801fda070df012b3fd1c6b8a}\label{info__service_8py_a93bf3b9a801fda070df012b3fd1c6b8a}} 
+\index{info\_service.py@{info\_service.py}!get\_distance\_and\_averagevelocity@{get\_distance\_and\_averagevelocity}}
+\index{get\_distance\_and\_averagevelocity@{get\_distance\_and\_averagevelocity}!info\_service.py@{info\_service.py}}
+\doxysubsubsection{\texorpdfstring{get\_distance\_and\_averagevelocity()}{get\_distance\_and\_averagevelocity()}}
+{\footnotesize\ttfamily def info\+\_\+service.\+get\+\_\+distance\+\_\+and\+\_\+averagevelocity (\begin{DoxyParamCaption}\item[{}]{msg }\end{DoxyParamCaption})}
+
+
+
+This function is the callback of the subscriber to the topic /pos\+\_\+vel. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & custom message containing the actual position and velocity of the robot \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{info__service_8py_ad315c9610fbe13d85904aa3b3f240573}\label{info__service_8py_ad315c9610fbe13d85904aa3b3f240573}} 
+\index{info\_service.py@{info\_service.py}!get\_values@{get\_values}}
+\index{get\_values@{get\_values}!info\_service.py@{info\_service.py}}
+\doxysubsubsection{\texorpdfstring{get\_values()}{get\_values()}}
+{\footnotesize\ttfamily def info\+\_\+service.\+get\+\_\+values (\begin{DoxyParamCaption}\item[{}]{s }\end{DoxyParamCaption})}
+
+
+
+This function is the callback of the service /info\+\_\+service. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & service request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+response\+: service response containing the distance from the target and the average velocity of the robot
+\end{DoxyReturn}
+It returns the distance from the target and the average velocity of the robot. ~\newline
+ \mbox{\Hypertarget{info__service_8py_a432bccfb09d7df31c450bfc156d07862}\label{info__service_8py_a432bccfb09d7df31c450bfc156d07862}} 
+\index{info\_service.py@{info\_service.py}!info\_service\_main@{info\_service\_main}}
+\index{info\_service\_main@{info\_service\_main}!info\_service.py@{info\_service.py}}
+\doxysubsubsection{\texorpdfstring{info\_service\_main()}{info\_service\_main()}}
+{\footnotesize\ttfamily def info\+\_\+service.\+info\+\_\+service\+\_\+main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This function initializes the node info\+\_\+service. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+It initializes the node info\+\_\+service and implements the subscriber to the custom message and the service to get the interested values. 

@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="namespaceset__target__client" kind="namespace" language="Python">
+    <compoundname>set_target_client</compoundname>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="set__target__client_8py_1ab79dcf4f93f6463ab37c8ead20eee86e" prot="public" static="no" mutable="no">
+        <type></type>
+        <definition>set_target_client.pub</definition>
+        <argsstring></argsstring>
+        <name>pub</name>
+        <initializer>=  None</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/set_target_client.py" line="75" column="1" bodyfile="scripts/set_target_client.py" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="set__target__client_8py_1a0af923c243307622a91d2e71d37bbf11" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int set_target_client.first_start</definition>
+        <argsstring></argsstring>
+        <name>first_start</name>
+        <initializer>=  0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/set_target_client.py" line="76" column="1" bodyfile="scripts/set_target_client.py" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="set__target__client_8py_1ab7cf6f6222a1c32e7c2441dc9c831151" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def set_target_client.publisher_node</definition>
+        <argsstring>(msg)</argsstring>
+        <name>publisher_node</name>
+        <param>
+          <type>msg</type>
+          <defname>msg</defname>
+        </param>
+        <briefdescription>
+<para>This function is the callback of the subscriber to the topic /odom. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>is the message received from the topic /odom </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>None</para>
+</simplesect>
+It takes the actual position and velocity of the robot and publishes them as a custom message. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/set_target_client.py" line="84" column="1" bodyfile="scripts/set_target_client.py" bodystart="84" bodyend="105"/>
+      </memberdef>
+      <memberdef kind="function" id="set__target__client_8py_1aadc59622a17538d6e68055fe76515f65" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def set_target_client.parameters_client_main</definition>
+        <argsstring>()</argsstring>
+        <name>parameters_client_main</name>
+        <briefdescription>
+<para>This function implements an action client. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>None</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>None</para>
+</simplesect>
+It also provides a user interface, running on a separate terminal, to let the user choose from the terminal either to: ° set a new target point that the robot must reach. ° cancel the goal previously chosen. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/set_target_client.py" line="114" column="1" bodyfile="scripts/set_target_client.py" bodystart="114" bodyend="194"/>
+      </memberdef>
+      <memberdef kind="function" id="set__target__client_8py_1a609e659d13e4e933bd007fbba9bd1641" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def set_target_client.main</definition>
+        <argsstring>()</argsstring>
+        <name>main</name>
+        <briefdescription>
+<para>This function initializes the node set_target_client. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>None</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>None</para>
+</simplesect>
+It initializes the node set_target_client and implements the subscriber to the topic /odom and the action client. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/set_target_client.py" line="201" column="1" bodyfile="scripts/set_target_client.py" bodystart="201" bodyend="214"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="scripts/set_target_client.py" line="1" column="1"/>
+  </compounddef>
+</doxygen>

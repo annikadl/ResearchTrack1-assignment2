@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>assignment_2_2023: scripts/info_service.py File Reference</title>
+<title>Research Track 1 Assignment2 2023: scripts/info_service.py File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,10 +21,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">assignment_2_2023
+   <div id="projectname">Research Track 1 Assignment2 2023
    &#160;<span id="projectnumber">1.0</span>
    </div>
-   <div id="projectbrief">Documentation for the second assignment of RT1 course</div>
+   <div id="projectbrief">This is the documentation for the second assignment of the Research Track 1 course at the University of Genoa</div>
   </td>
  </tr>
  </tbody>
@@ -79,14 +79,14 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a93bf3b9a801fda070df012b3fd1c6b8a"><td class="memItemLeft" align="right" valign="top"><a id="a93bf3b9a801fda070df012b3fd1c6b8a"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>info_service.get_distance_and_averagevelocity</b> (msg)</td></tr>
+<tr class="memitem:a93bf3b9a801fda070df012b3fd1c6b8a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="info__service_8py.html#a93bf3b9a801fda070df012b3fd1c6b8a">info_service.get_distance_and_averagevelocity</a> (msg)</td></tr>
+<tr class="memdesc:a93bf3b9a801fda070df012b3fd1c6b8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is the callback of the subscriber to the topic /pos_vel.  <a href="info__service_8py.html#a93bf3b9a801fda070df012b3fd1c6b8a">More...</a><br /></td></tr>
 <tr class="separator:a93bf3b9a801fda070df012b3fd1c6b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad315c9610fbe13d85904aa3b3f240573"><td class="memItemLeft" align="right" valign="top"><a id="ad315c9610fbe13d85904aa3b3f240573"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>info_service.get_values</b> (s)</td></tr>
+<tr class="memitem:ad315c9610fbe13d85904aa3b3f240573"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="info__service_8py.html#ad315c9610fbe13d85904aa3b3f240573">info_service.get_values</a> (s)</td></tr>
+<tr class="memdesc:ad315c9610fbe13d85904aa3b3f240573"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is the callback of the service /info_service.  <a href="info__service_8py.html#ad315c9610fbe13d85904aa3b3f240573">More...</a><br /></td></tr>
 <tr class="separator:ad315c9610fbe13d85904aa3b3f240573"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a432bccfb09d7df31c450bfc156d07862"><td class="memItemLeft" align="right" valign="top"><a id="a432bccfb09d7df31c450bfc156d07862"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>info_service.info_service_main</b> ()</td></tr>
+<tr class="memitem:a432bccfb09d7df31c450bfc156d07862"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="info__service_8py.html#a432bccfb09d7df31c450bfc156d07862">info_service.info_service_main</a> ()</td></tr>
+<tr class="memdesc:a432bccfb09d7df31c450bfc156d07862"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function initializes the node info_service.  <a href="info__service_8py.html#a432bccfb09d7df31c450bfc156d07862">More...</a><br /></td></tr>
 <tr class="separator:a432bccfb09d7df31c450bfc156d07862"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -100,8 +100,107 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>info_service.info_serv
  ° None <br  />
 </p>
 <p>Services: <br  />
- ° /info_service: service to get the distance of the robot from the target and the robot's average speed </p>
-</div></div><!-- contents -->
+ ° /info_service: service to get the distance of the robot from the target and the robot's average speed</p>
+<p>Ros parameters: <br  />
+ ° /des_pos_x: x coordinate of the last target <br  />
+ ° /des_pos_y: y coordinate of the last target <br  />
+ ° /window_size: size of the window used to compute the average velocity <br  />
+</p>
+<p>Description: <br  />
+ info_service,py is a node implementing a service that, when called, returns the distance from the goal and the average velocity of the robot. <br  />
+</p>
+<p>To make it feasible, a srv file info_service.srv is created in the so-called directory; it contains the expected service response type. <br  />
+</p>
+<p>A subscriber is implemented and its callback takes the target position from the ros parameters and the actual one from the custom message sent by the <a class="el" href="set__target__client_8py.html" title="Action server that allows the user to set a target point or to cancel it.">set_target_client.py</a>. The distance is computed as the Euclidean distance by using the Python built-in function math.dist(des_coordinates, actual coordinates) by importing math library. <br  />
+ The velocity values are extracted by the custom message too, they are collected in a list of dimension window_size with a default value of 10 (that can be modified in the launch file). Then the average velocity is computed as average_vel_x = sum(vel_data) / min(len(vel_data), velocity_window_size). These values compose the response of the service. <br  />
+</p>
+<p><a class="el" href="info__service_8py.html" title="Service node that subscribes to the robot&#39;s position and velocity (using the custom message) and impl...">info_service.py</a> is run by the launch file and the service can be called by using the command rosservice call /info_service on the terminal. <br  />
+ </p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a93bf3b9a801fda070df012b3fd1c6b8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93bf3b9a801fda070df012b3fd1c6b8a">&#9670;&nbsp;</a></span>get_distance_and_averagevelocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def info_service.get_distance_and_averagevelocity </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function is the callback of the subscriber to the topic /pos_vel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>custom message containing the actual position and velocity of the robot </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
+
+</div>
+</div>
+<a id="ad315c9610fbe13d85904aa3b3f240573"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad315c9610fbe13d85904aa3b3f240573">&#9670;&nbsp;</a></span>get_values()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def info_service.get_values </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function is the callback of the service /info_service. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>service request </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>response: service response containing the distance from the target and the average velocity of the robot</dd></dl>
+<p>It returns the distance from the target and the average velocity of the robot. <br  />
+ </p>
+
+</div>
+</div>
+<a id="a432bccfb09d7df31c450bfc156d07862"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a432bccfb09d7df31c450bfc156d07862">&#9670;&nbsp;</a></span>info_service_main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def info_service.info_service_main </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function initializes the node info_service. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">None</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>It initializes the node info_service and implements the subscriber to the custom message and the service to get the interested values. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

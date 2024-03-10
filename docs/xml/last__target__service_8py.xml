@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="last__target__service_8py" kind="file" language="Python">
+    <compoundname>last_target_service.py</compoundname>
+    <innernamespace refid="namespacelast__target__service">last_target_service</innernamespace>
+    <innernamespace refid="namespaceassignment__2__2023">assignment_2_2023</innernamespace>
+    <briefdescription>
+<para>Service that returns the values of the last target sent by the user. </para>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="author"><para>Annika Delucchi </para>
+</simplesect>
+<simplesect kind="version"><para>1.0 </para>
+</simplesect>
+<simplesect kind="date"><para>9/03/2024</para>
+</simplesect>
+Subscribes to: <linebreak/>
+ ° /pos_vel: custom message containing the actual position and velocity of the robot</para>
+<para>Publishes to: <linebreak/>
+ ° None</para>
+<para>Services: <linebreak/>
+ ° /last_target: service to get the last target</para>
+<para>Ros parameters: <linebreak/>
+ ° /des_pos_x: x coordinate of the last target ° /des_pos_y: y coordinate of the last target</para>
+<para>Description: <linebreak/>
+ <ref refid="last__target__service_8py" kindref="compound">last_target_service.py</ref> is a node implementing a service that, when called, returns the values of the last target sent by the user. <linebreak/>
+ To make it feasible, a srv file Last_target.srv is created in the so-called directory; it contains the expected service response type. <linebreak/>
+ The last target values are extracted from the ros parameters updated from the set_target_client,py and returned as response from the service. <linebreak/>
+ If the service is called before the user sets a target, the response gives the default values(/des_pos_x = 0.0 and des_pos_y = 1.0) chosen in the launch file assignment1.launch. <linebreak/>
+ Furthermore, this service is run by the launch file; to call it and get the last target sent by the user run the command rosservice call /last_target on the terminal. </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="comment">#!/usr/bin/env<sp/>python</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="stringliteral">&quot;&quot;&quot;</highlight></codeline>
+<codeline lineno="45"><highlight class="stringliteral">last_target_service.py<sp/>is<sp/>a<sp/>node<sp/>implementing<sp/>a<sp/>service<sp/>that,<sp/>when<sp/>called,<sp/>returns<sp/></highlight></codeline>
+<codeline lineno="46"><highlight class="stringliteral">the<sp/>values<sp/>of<sp/>the<sp/>last<sp/>target<sp/>sent<sp/>by<sp/>the<sp/>user.<sp/></highlight></codeline>
+<codeline lineno="47"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="48"><highlight class="stringliteral">To<sp/>make<sp/>it<sp/>feasible,<sp/>a<sp/>srv<sp/>file<sp/>Last_target.srv<sp/>is<sp/>created<sp/>in<sp/>the<sp/>so-called<sp/>directory;<sp/>it</highlight></codeline>
+<codeline lineno="49"><highlight class="stringliteral">contains<sp/>the<sp/>expected<sp/>service<sp/>response<sp/>type.<sp/></highlight></codeline>
+<codeline lineno="50"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="51"><highlight class="stringliteral">The<sp/>last<sp/>target<sp/>values<sp/>are<sp/>extracted<sp/>from<sp/>the<sp/>ros<sp/>parameters<sp/>updated<sp/>from<sp/>the</highlight></codeline>
+<codeline lineno="52"><highlight class="stringliteral">set_target_client,py<sp/>and<sp/>returned<sp/>as<sp/>response<sp/>from<sp/>the<sp/>service.<sp/></highlight></codeline>
+<codeline lineno="53"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="54"><highlight class="stringliteral">If<sp/>the<sp/>service<sp/>is<sp/>called<sp/>before<sp/>the<sp/>user<sp/>sets<sp/>a<sp/>target,<sp/>the<sp/>response<sp/>gives<sp/>the<sp/>default</highlight></codeline>
+<codeline lineno="55"><highlight class="stringliteral">values(/des_pos_x<sp/>=<sp/>0.0<sp/>and<sp/>des_pos_y<sp/>=<sp/>1.0)<sp/>chosen<sp/>in<sp/>the<sp/>launch<sp/>file<sp/>assignment1.launch.</highlight></codeline>
+<codeline lineno="56"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="57"><highlight class="stringliteral">Furthermore,<sp/>this<sp/>service<sp/>is<sp/>run<sp/>by<sp/>the<sp/>launch<sp/>file;<sp/>to<sp/>call<sp/>it<sp/>and<sp/>get<sp/>the<sp/>last<sp/>target<sp/>sent<sp/>by</highlight></codeline>
+<codeline lineno="58"><highlight class="stringliteral">the<sp/>user<sp/>run<sp/>the<sp/>command<sp/>rosservice<sp/>call<sp/>/last_target<sp/>on<sp/>the<sp/>terminal.</highlight></codeline>
+<codeline lineno="59"><highlight class="stringliteral">&quot;&quot;&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>rospy</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>assignment_2_2023.msg</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>assignment_2_2023.msg<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>Vel</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>assignment_2_2023.srv<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>Last_target,<sp/>Last_targetResponse</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="keyword">def<sp/></highlight><highlight class="normal">get_last_target(msg):</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">global</highlight><highlight class="normal"><sp/>last_des_x,<sp/>last_des_y</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>get<sp/>last<sp/>target<sp/>from<sp/>ros<sp/>parameters.<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>they<sp/>have<sp/>been<sp/>updated<sp/>when<sp/>the<sp/>last<sp/>target<sp/>was<sp/>entered<sp/>by<sp/>the<sp/>user</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/>last_des_x<sp/>=<sp/>rospy.get_param(</highlight><highlight class="stringliteral">&apos;/des_pos_x&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>last_des_y<sp/>=<sp/>rospy.get_param(</highlight><highlight class="stringliteral">&apos;/des_pos_y&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#print(&quot;Last<sp/>input<sp/>target<sp/>is<sp/>des_x<sp/>=<sp/>%f,<sp/>des_y<sp/>=<sp/>%f&quot;<sp/>%<sp/>(last_des_x,<sp/>last_des_y))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="keyword">def<sp/></highlight><highlight class="normal">result_callback(s):</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">global</highlight><highlight class="normal"><sp/>last_des_x,<sp/>last_des_y<sp/></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>store<sp/>last<sp/>target</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>response<sp/>=<sp/>Last_targetResponse()</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/>response.last_target_x<sp/>=<sp/>last_des_x</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/>response.last_target_y<sp/>=<sp/>last_des_y</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>response</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight><highlight class="keyword">def<sp/></highlight><highlight class="normal"><ref refid="namespacelast__target__service" kindref="compound">last_target_service</ref>():</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.init_node(</highlight><highlight class="stringliteral">&apos;last_target_service&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&quot;Last<sp/>target<sp/>node<sp/>initialized&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>SUBSCRIBER:<sp/>Subscribe<sp/>to<sp/>the<sp/>correct<sp/>action<sp/>goal<sp/>topic</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.Subscriber(</highlight><highlight class="stringliteral">&quot;/pos_vel&quot;</highlight><highlight class="normal">,<sp/>Vel,<sp/>get_last_target)</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>SERVICE:<sp/>Service<sp/>to<sp/>get<sp/>the<sp/>last<sp/>target.<sp/>It<sp/>uses<sp/>Last_target<sp/>service<sp/>type</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/>service<sp/>=<sp/>rospy.Service(</highlight><highlight class="stringliteral">&apos;last_target&apos;</highlight><highlight class="normal">,<sp/>Last_target,<sp/>result_callback)</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.spin()</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>__name__<sp/>==<sp/></highlight><highlight class="stringliteral">&quot;__main__&quot;</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespacelast__target__service" kindref="compound">last_target_service</ref>()</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="scripts/last_target_service.py"/>
+  </compounddef>
+</doxygen>

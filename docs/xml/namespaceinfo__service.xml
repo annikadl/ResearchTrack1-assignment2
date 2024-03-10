@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="namespaceinfo__service" kind="namespace" language="Python">
+    <compoundname>info_service</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="info__service_8py_1a93bf3b9a801fda070df012b3fd1c6b8a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def info_service.get_distance_and_averagevelocity</definition>
+        <argsstring>(msg)</argsstring>
+        <name>get_distance_and_averagevelocity</name>
+        <param>
+          <type>msg</type>
+          <defname>msg</defname>
+        </param>
+        <briefdescription>
+<para>This function is the callback of the subscriber to the topic /pos_vel. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>custom message containing the actual position and velocity of the robot </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>None </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/info_service.py" line="84" column="1" bodyfile="scripts/info_service.py" bodystart="84" bodyend="108"/>
+      </memberdef>
+      <memberdef kind="function" id="info__service_8py_1ad315c9610fbe13d85904aa3b3f240573" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def info_service.get_values</definition>
+        <argsstring>(s)</argsstring>
+        <name>get_values</name>
+        <param>
+          <type>s</type>
+          <defname>s</defname>
+        </param>
+        <briefdescription>
+<para>This function is the callback of the service /info_service. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>s</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>service request </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>response: service response containing the distance from the target and the average velocity of the robot</para>
+</simplesect>
+It returns the distance from the target and the average velocity of the robot. <linebreak/>
+ </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/info_service.py" line="115" column="1" bodyfile="scripts/info_service.py" bodystart="115" bodyend="120"/>
+      </memberdef>
+      <memberdef kind="function" id="info__service_8py_1a432bccfb09d7df31c450bfc156d07862" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>def</type>
+        <definition>def info_service.info_service_main</definition>
+        <argsstring>()</argsstring>
+        <name>info_service_main</name>
+        <briefdescription>
+<para>This function initializes the node info_service. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>None</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>None</para>
+</simplesect>
+It initializes the node info_service and implements the subscriber to the custom message and the service to get the interested values. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="scripts/info_service.py" line="127" column="1" bodyfile="scripts/info_service.py" bodystart="127" bodyend="143"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="scripts/info_service.py" line="1" column="1"/>
+  </compounddef>
+</doxygen>

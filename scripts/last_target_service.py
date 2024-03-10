@@ -16,6 +16,10 @@
 # Services: <BR>
 #    ° /last_target: service to get the last target
 #
+# Ros parameters: <BR>
+#    ° /des_pos_x: x coordinate of the last target
+#    ° /des_pos_y: y coordinate of the last target
+#
 # Description: <BR>
 # last_target_service.py is a node implementing a service that, when called, returns 
 # the values of the last target sent by the user. 
@@ -54,32 +58,34 @@ Furthermore, this service is run by the launch file; to call it and get the last
 the user run the command rosservice call /last_target on the terminal.
 """
 
-
-
 import rospy
 import assignment_2_2023.msg
 from assignment_2_2023.msg import Vel
 from assignment_2_2023.srv import Last_target, Last_targetResponse
 
-# \brief This function is the callback of the subscriber to the topic /pos_vel. It takes the last target from the ros parameters.
+##
+# \brief This function is the callback of the subscriber to the topic /pos_vel
 # \param msg: custom message containing the actual position and velocity of the robot
 # \return None
+#
+# It takes the last target from the ros parameters.
 def get_last_target(msg):
     global last_des_x, last_des_y
 
     # get last target from ros parameters. 
     # they have been updated when the last target was entered by the user
-    ## @param des_pos_x: Desired x-coordinate for the robot's position.
-    ## @param des_pos_y: Desired y-coordinate for the robot's position.
-
     last_des_x = rospy.get_param('/des_pos_x')
     last_des_y = rospy.get_param('/des_pos_y')
     
     #print("Last input target is des_x = %f, des_y = %f" % (last_des_x, last_des_y))
     
-# \brief This function is the callback of the service /last_target. It returns the last target entered by the user.
+##    
+# \brief This function is the callback of the service /last_target
 # \param s: service request
 # \return response: service response containing the last target entered by the user    
+#
+# It returns the last target entered by the user. If the service is called before the user sets a target, 
+# the response gives the default values(/des_pos_x = 0.0 and des_pos_y = 1.0) chosen in the launch file assignment1.launch
 def result_callback(s):
     global last_des_x, last_des_y 
     
@@ -90,9 +96,12 @@ def result_callback(s):
     
     return response
 
+##
 # \brief This function initializes the node last_target_service            
 # \param None
 # \return None
+#
+# It initializes the node last_target_service and implements the service to get the last target
 def last_target_service():
     rospy.init_node('last_target_service')
     rospy.loginfo("Last target node initialized")

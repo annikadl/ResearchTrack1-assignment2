@@ -16,6 +16,30 @@
 # Services: <BR>
 #    ° /info_service: service to get the distance of the robot from the target and the robot's average speed
 # 
+# Ros parameters: <BR>
+#    ° /des_pos_x: x coordinate of the last target <BR>
+#    ° /des_pos_y: y coordinate of the last target <BR>
+#    ° /window_size: size of the window used to compute the average velocity <BR>
+#
+# Description: <BR>
+# info_service,py is a node implementing a service that, when called, returns the distance from
+# the goal and the average velocity of the robot. <BR>
+#
+# To make it feasible, a srv file info_service.srv is created in the so-called directory; it
+# contains the expected service response type. <BR>
+#
+# A subscriber is implemented and its callback takes the target position from the ros parameters
+# and the actual one from the custom message sent by the set_target_client.py. The distance is
+# computed as the Euclidean distance by using the Python built-in function
+# math.dist(des_coordinates, actual coordinates) by importing math library. <BR>
+# The velocity values are extracted by the custom message too, they are collected in a list of
+# dimension window_size with a default value of 10 (that can be modified in the launch file).
+# Then the average velocity is computed as average_vel_x = sum(vel_data) / min(len(vel_data),
+# velocity_window_size). These values compose the response of the service. <BR>
+#
+# info_service.py is run by the launch file and the service can be called by using the command
+# rosservice call /info_service on the terminal. <BR>
+#
 
 
 #!/usr/bin/env python
@@ -51,10 +75,12 @@ from assignment_2_2023.msg import Vel
 from actionlib_msgs.msg import GoalStatusArray
 from assignment_2_2023.srv import info_service, info_serviceResponse
 
-
-# \brief This function is the callback of the subscriber to the topic /pos_vel. It takes the actual position and velocity of the robot and computes the distance from the target and the average velocity.
-# \param msg is the message received from the topic /pos_vel
+##
+# \brief This function is the callback of the subscriber to the topic /pos_vel. 
+# \param msg: custom message containing the actual position and velocity of the robot
 # \return None
+
+# It takes the actual position and velocity of the robot and computes the distance from the target and the average velocity.
 def get_distance_and_averagevelocity(msg):
     global success, average_vel_x, distance
 
@@ -80,18 +106,24 @@ def get_distance_and_averagevelocity(msg):
     average_vel_x = sum(vel_data) / min(len(vel_data), velocity_window_size)
 
     
-# \brief This function is the callback of the service /info_service. It returns the distance from the target and the average velocity of the robot.
+##     
+# \brief This function is the callback of the service /info_service. 
 # \param s: service request
-# \return response: service response containing the distance from the target and the average velocity of the robot        
+# \return response: service response containing the distance from the target and the average velocity of the robot
+#
+# It returns the distance from the target and the average velocity of the robot.                
 def get_values(s):      
     global average_vel_x, distance
     
     rospy.loginfo("Distance= %f Average velocity = %f", distance, average_vel_x)
     return info_serviceResponse(distance, average_vel_x)	
-    		      
+
+##                  
 # \brief This function initializes the node info_service
 # \param None
 # \return None
+#
+# It initializes the node info_service and implements the subscriber to the custom message and the service to get the interested values.
 def info_service_main():
     global velocity_window_size
 

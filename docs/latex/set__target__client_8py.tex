@@ -8,15 +8,12 @@ Action server that allows the user to set a target point or to cancel it.
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{set__target__client_8py_ab7cf6f6222a1c32e7c2441dc9c831151}\label{set__target__client_8py_ab7cf6f6222a1c32e7c2441dc9c831151}} 
-def {\bfseries set\+\_\+target\+\_\+client.\+publisher\+\_\+node} (msg)
-\item 
-\mbox{\Hypertarget{set__target__client_8py_aadc59622a17538d6e68055fe76515f65}\label{set__target__client_8py_aadc59622a17538d6e68055fe76515f65}} 
-def {\bfseries set\+\_\+target\+\_\+client.\+parameters\+\_\+client\+\_\+main} ()
-\item 
-\mbox{\Hypertarget{set__target__client_8py_a609e659d13e4e933bd007fbba9bd1641}\label{set__target__client_8py_a609e659d13e4e933bd007fbba9bd1641}} 
-def {\bfseries set\+\_\+target\+\_\+client.\+main} ()
-\end{DoxyCompactItemize}
+def \mbox{\hyperlink{set__target__client_8py_ab7cf6f6222a1c32e7c2441dc9c831151}{set\+\_\+target\+\_\+client.\+publisher\+\_\+node}} (msg)
+\begin{DoxyCompactList}\small\item\em This function is the callback of the subscriber to the topic /odom. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{set__target__client_8py_aadc59622a17538d6e68055fe76515f65}{set\+\_\+target\+\_\+client.\+parameters\+\_\+client\+\_\+main}} ()
+\begin{DoxyCompactList}\small\item\em This function implements an action client. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{set__target__client_8py_a609e659d13e4e933bd007fbba9bd1641}{set\+\_\+target\+\_\+client.\+main}} ()
+\begin{DoxyCompactList}\small\item\em This function initializes the node set\+\_\+target\+\_\+client. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
@@ -47,4 +44,80 @@ Publishes to\+: ~\newline
  ° /pos\+\_\+vel\+: custom message containing the actual position and velocity of the robot
 
 Services\+: ~\newline
- ° None 
+ ° None
+
+Ros parameters\+: ~\newline
+ ° /des\+\_\+pos\+\_\+x\+: x coordinate of the last target ~\newline
+ ° /des\+\_\+pos\+\_\+y\+: y coordinate of the last target ~\newline
+
+
+Description\+: ~\newline
+ This action server implements an action client, allowing the user to set a target point or to cancel it (this node also uses the status of the goal to know when the target has been reached); this node also publishes robot position and velocity as a custom message. ~\newline
+
+
+It implements different functions. ~\newline
+
+
+set\+\_\+client\+\_\+parameters() implements an action client, which also provides a user interface, running on a separate terminal, to let the user choose from the terminal either to\+: ~\newline
+ ° set a new target point that the robot must reach. ~\newline
+ ° cancel the goal previously chosen. ~\newline
+
+
+The \mbox{\hyperlink{set__target__client_8py_ab7cf6f6222a1c32e7c2441dc9c831151}{publisher\+\_\+node()}} function is used to create and publish a custom message containing the actual position (x,y) and velocity (linear, angular) of the robot. This function represents the callback of a subscriber, which takes the required information subscribing to the topic {\ttfamily odom}. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{set__target__client_8py_a609e659d13e4e933bd007fbba9bd1641}\label{set__target__client_8py_a609e659d13e4e933bd007fbba9bd1641}} 
+\index{set\_target\_client.py@{set\_target\_client.py}!main@{main}}
+\index{main@{main}!set\_target\_client.py@{set\_target\_client.py}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily def set\+\_\+target\+\_\+client.\+main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This function initializes the node set\+\_\+target\+\_\+client. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+It initializes the node set\+\_\+target\+\_\+client and implements the subscriber to the topic /odom and the action client. \mbox{\Hypertarget{set__target__client_8py_aadc59622a17538d6e68055fe76515f65}\label{set__target__client_8py_aadc59622a17538d6e68055fe76515f65}} 
+\index{set\_target\_client.py@{set\_target\_client.py}!parameters\_client\_main@{parameters\_client\_main}}
+\index{parameters\_client\_main@{parameters\_client\_main}!set\_target\_client.py@{set\_target\_client.py}}
+\doxysubsubsection{\texorpdfstring{parameters\_client\_main()}{parameters\_client\_main()}}
+{\footnotesize\ttfamily def set\+\_\+target\+\_\+client.\+parameters\+\_\+client\+\_\+main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This function implements an action client. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+It also provides a user interface, running on a separate terminal, to let the user choose from the terminal either to\+: ° set a new target point that the robot must reach. ° cancel the goal previously chosen. \mbox{\Hypertarget{set__target__client_8py_ab7cf6f6222a1c32e7c2441dc9c831151}\label{set__target__client_8py_ab7cf6f6222a1c32e7c2441dc9c831151}} 
+\index{set\_target\_client.py@{set\_target\_client.py}!publisher\_node@{publisher\_node}}
+\index{publisher\_node@{publisher\_node}!set\_target\_client.py@{set\_target\_client.py}}
+\doxysubsubsection{\texorpdfstring{publisher\_node()}{publisher\_node()}}
+{\footnotesize\ttfamily def set\+\_\+target\+\_\+client.\+publisher\+\_\+node (\begin{DoxyParamCaption}\item[{}]{msg }\end{DoxyParamCaption})}
+
+
+
+This function is the callback of the subscriber to the topic /odom. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & is the message received from the topic /odom \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+It takes the actual position and velocity of the robot and publishes them as a custom message. 

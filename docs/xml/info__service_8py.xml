@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.17">
+  <compounddef id="info__service_8py" kind="file" language="Python">
+    <compoundname>info_service.py</compoundname>
+    <innernamespace refid="namespaceinfo__service">info_service</innernamespace>
+    <innernamespace refid="namespaceassignment__2__2023">assignment_2_2023</innernamespace>
+    <briefdescription>
+<para>Service node that subscribes to the robot&apos;s position and velocity (using the custom message) and implements a server to retrieve the distance of the robot from the target and the robot&apos;s average speed. </para>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="author"><para>Annika Delucchi </para>
+</simplesect>
+<simplesect kind="version"><para>1.0 </para>
+</simplesect>
+<simplesect kind="date"><para>9/03/2024</para>
+</simplesect>
+Subscribes to: <linebreak/>
+ ° /pos_vel: custom message containing the actual position and velocity of the robot</para>
+<para>Publishes to: <linebreak/>
+ ° None <linebreak/>
+</para>
+<para>Services: <linebreak/>
+ ° /info_service: service to get the distance of the robot from the target and the robot&apos;s average speed</para>
+<para>Ros parameters: <linebreak/>
+ ° /des_pos_x: x coordinate of the last target <linebreak/>
+ ° /des_pos_y: y coordinate of the last target <linebreak/>
+ ° /window_size: size of the window used to compute the average velocity <linebreak/>
+</para>
+<para>Description: <linebreak/>
+ info_service,py is a node implementing a service that, when called, returns the distance from the goal and the average velocity of the robot. <linebreak/>
+</para>
+<para>To make it feasible, a srv file info_service.srv is created in the so-called directory; it contains the expected service response type. <linebreak/>
+</para>
+<para>A subscriber is implemented and its callback takes the target position from the ros parameters and the actual one from the custom message sent by the <ref refid="set__target__client_8py" kindref="compound">set_target_client.py</ref>. The distance is computed as the Euclidean distance by using the Python built-in function math.dist(des_coordinates, actual coordinates) by importing math library. <linebreak/>
+ The velocity values are extracted by the custom message too, they are collected in a list of dimension window_size with a default value of 10 (that can be modified in the launch file). Then the average velocity is computed as average_vel_x = sum(vel_data) / min(len(vel_data), velocity_window_size). These values compose the response of the service. <linebreak/>
+</para>
+<para><ref refid="info__service_8py" kindref="compound">info_service.py</ref> is run by the launch file and the service can be called by using the command rosservice call /info_service on the terminal. <linebreak/>
+ </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="comment">#!/usr/bin/env<sp/>python</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="stringliteral">&quot;&quot;&quot;</highlight></codeline>
+<codeline lineno="48"><highlight class="stringliteral">info_service,py<sp/>is<sp/>a<sp/>node<sp/>implementing<sp/>a<sp/>service<sp/>that,<sp/>when<sp/>called,<sp/>returns<sp/>the<sp/>distance<sp/>from</highlight></codeline>
+<codeline lineno="49"><highlight class="stringliteral">the<sp/>goal<sp/>and<sp/>the<sp/>average<sp/>velocity<sp/>of<sp/>the<sp/>robot.<sp/></highlight></codeline>
+<codeline lineno="50"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="51"><highlight class="stringliteral">To<sp/>make<sp/>it<sp/>feasible,<sp/>a<sp/>srv<sp/>file<sp/>info_service.srv<sp/>is<sp/>created<sp/>in<sp/>the<sp/>so-called<sp/>directory;<sp/>it</highlight></codeline>
+<codeline lineno="52"><highlight class="stringliteral">contains<sp/>the<sp/>expected<sp/>service<sp/>response<sp/>type.<sp/></highlight></codeline>
+<codeline lineno="53"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="54"><highlight class="stringliteral">A<sp/>subscriber<sp/>is<sp/>implemented<sp/>and<sp/>its<sp/>callback<sp/>takes<sp/>the<sp/>target<sp/>position<sp/>from<sp/>the<sp/>ros<sp/>parameters</highlight></codeline>
+<codeline lineno="55"><highlight class="stringliteral">and<sp/>the<sp/>actual<sp/>one<sp/>from<sp/>the<sp/>custom<sp/>message<sp/>sent<sp/>by<sp/>the<sp/>set_target_client.py.<sp/>The<sp/>distance<sp/>is</highlight></codeline>
+<codeline lineno="56"><highlight class="stringliteral">computed<sp/>as<sp/>the<sp/>Euclidean<sp/>distance<sp/>by<sp/>using<sp/>the<sp/>Python<sp/>built-in<sp/>function</highlight></codeline>
+<codeline lineno="57"><highlight class="stringliteral">math.dist(des_coordinates,<sp/>actual<sp/>coordinates)<sp/>by<sp/>importing<sp/>math<sp/>library.<sp/></highlight></codeline>
+<codeline lineno="58"><highlight class="stringliteral">The<sp/>velocity<sp/>values<sp/>are<sp/>extracted<sp/>by<sp/>the<sp/>custom<sp/>message<sp/>too,<sp/>they<sp/>are<sp/>collected<sp/>in<sp/>a<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="59"><highlight class="stringliteral">dimension<sp/>window_size<sp/>with<sp/>a<sp/>default<sp/>value<sp/>of<sp/>10<sp/>(that<sp/>can<sp/>be<sp/>modified<sp/>in<sp/>the<sp/>launch<sp/>file).</highlight></codeline>
+<codeline lineno="60"><highlight class="stringliteral">Then<sp/>the<sp/>average<sp/>velocity<sp/>is<sp/>computed<sp/>as<sp/>average_vel_x<sp/>=<sp/>sum(vel_data)<sp/>/<sp/>min(len(vel_data),</highlight></codeline>
+<codeline lineno="61"><highlight class="stringliteral">velocity_window_size).<sp/>These<sp/>values<sp/>compose<sp/>the<sp/>response<sp/>of<sp/>the<sp/>service.</highlight></codeline>
+<codeline lineno="62"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="63"><highlight class="stringliteral">info_service.py<sp/>is<sp/>run<sp/>by<sp/>the<sp/>launch<sp/>file<sp/>and<sp/>the<sp/>service<sp/>can<sp/>be<sp/>called<sp/>by<sp/>using<sp/>the<sp/>command</highlight></codeline>
+<codeline lineno="64"><highlight class="stringliteral">rosservice<sp/>call<sp/>/info_service<sp/>on<sp/>the<sp/>terminal.</highlight></codeline>
+<codeline lineno="65"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="66"><highlight class="stringliteral"></highlight></codeline>
+<codeline lineno="67"><highlight class="stringliteral">&quot;&quot;&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>rospy</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>geometry_msgs.msg<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>Point,<sp/>Pose,<sp/>Twist</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>nav_msgs.msg<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>Odometry</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>math</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>assignment_2_2023.msg</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>assignment_2_2023.msg<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>Vel</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>actionlib_msgs.msg<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>GoalStatusArray</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>assignment_2_2023.srv<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>info_service,<sp/>info_serviceResponse</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="comment">#<sp/>It<sp/>takes<sp/>the<sp/>actual<sp/>position<sp/>and<sp/>velocity<sp/>of<sp/>the<sp/>robot<sp/>and<sp/>computes<sp/>the<sp/>distance<sp/>from<sp/>the<sp/>target<sp/>and<sp/>the<sp/>average<sp/>velocity.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="keyword">def<sp/></highlight><highlight class="normal">get_distance_and_averagevelocity(msg):</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">global</highlight><highlight class="normal"><sp/>success,<sp/>average_vel_x,<sp/>distance</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>desired<sp/>position<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/>des_x<sp/>=<sp/>rospy.get_param(</highlight><highlight class="stringliteral">&apos;/des_pos_x&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/>des_y<sp/>=<sp/>rospy.get_param(</highlight><highlight class="stringliteral">&apos;/des_pos_y&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>actual<sp/>position</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/>actual_x<sp/>=<sp/>msg.pos_x</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>actual_y<sp/>=<sp/>msg.pos_y</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>compute<sp/>distance</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>des_coordinates<sp/>=<sp/>[des_x,<sp/>des_y]</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>actual_coordinates<sp/>=<sp/>[actual_x,<sp/>actual_y]</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/>distance<sp/>=<sp/>math.dist(des_coordinates,<sp/>actual_coordinates)</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>compute<sp/>linear<sp/>average<sp/>velocity</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>isinstance(msg.vel_x,<sp/>list):</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>vel_data<sp/>=<sp/>msg.vel_x[-velocity_window_size:]</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>vel_data<sp/>=<sp/>[msg.vel_x]</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/>average_vel_x<sp/>=<sp/>sum(vel_data)<sp/>/<sp/>min(len(vel_data),<sp/>velocity_window_size)</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="keyword">def<sp/></highlight><highlight class="normal">get_values(s):<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">global</highlight><highlight class="normal"><sp/>average_vel_x,<sp/>distance</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&quot;Distance=<sp/>%f<sp/>Average<sp/>velocity<sp/>=<sp/>%f&quot;</highlight><highlight class="normal">,<sp/>distance,<sp/>average_vel_x)</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>info_serviceResponse(distance,<sp/>average_vel_x)<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="keyword">def<sp/></highlight><highlight class="normal">info_service_main():</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">global</highlight><highlight class="normal"><sp/>velocity_window_size</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.init_node(</highlight><highlight class="stringliteral">&apos;info_service&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.loginfo(</highlight><highlight class="stringliteral">&quot;Info<sp/>service<sp/>node<sp/>initialized&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>Read<sp/>window<sp/>size<sp/>from<sp/>the<sp/>parameter<sp/>server<sp/>(set<sp/>in<sp/>the<sp/>launch<sp/>file)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/>velocity_window_size<sp/>=<sp/>rospy.get_param(</highlight><highlight class="stringliteral">&apos;/window_size&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>SUBSCRIBER:<sp/>Subscribe<sp/>to<sp/>the<sp/>custom<sp/>message</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/>subscriber<sp/>=<sp/>rospy.Subscriber(</highlight><highlight class="stringliteral">&quot;/pos_vel&quot;</highlight><highlight class="normal">,<sp/>Vel,<sp/>get_distance_and_averagevelocity)</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>SERVICE:<sp/>Service<sp/>to<sp/>get<sp/>the<sp/>interested<sp/>values</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/>service<sp/>=<sp/>rospy.Service(</highlight><highlight class="stringliteral">&quot;info_service&quot;</highlight><highlight class="normal">,<sp/>info_service,<sp/>get_values)</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/>rospy.spin()</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>__name__<sp/>==<sp/></highlight><highlight class="stringliteral">&quot;__main__&quot;</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/>info_service_main()</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+    </programlisting>
+    <location file="scripts/info_service.py"/>
+  </compounddef>
+</doxygen>
