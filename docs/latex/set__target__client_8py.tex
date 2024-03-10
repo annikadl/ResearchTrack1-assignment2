@@ -1,0 +1,50 @@
+\hypertarget{set__target__client_8py}{}\doxysection{scripts/set\+\_\+target\+\_\+client.py File Reference}
+\label{set__target__client_8py}\index{scripts/set\_target\_client.py@{scripts/set\_target\_client.py}}
+
+
+Action server that allows the user to set a target point or to cancel it.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{set__target__client_8py_ab7cf6f6222a1c32e7c2441dc9c831151}\label{set__target__client_8py_ab7cf6f6222a1c32e7c2441dc9c831151}} 
+def {\bfseries set\+\_\+target\+\_\+client.\+publisher\+\_\+node} (msg)
+\item 
+\mbox{\Hypertarget{set__target__client_8py_aadc59622a17538d6e68055fe76515f65}\label{set__target__client_8py_aadc59622a17538d6e68055fe76515f65}} 
+def {\bfseries set\+\_\+target\+\_\+client.\+parameters\+\_\+client\+\_\+main} ()
+\item 
+\mbox{\Hypertarget{set__target__client_8py_a609e659d13e4e933bd007fbba9bd1641}\label{set__target__client_8py_a609e659d13e4e933bd007fbba9bd1641}} 
+def {\bfseries set\+\_\+target\+\_\+client.\+main} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{set__target__client_8py_ab79dcf4f93f6463ab37c8ead20eee86e}\label{set__target__client_8py_ab79dcf4f93f6463ab37c8ead20eee86e}} 
+{\bfseries set\+\_\+target\+\_\+client.\+pub} = None
+\item 
+\mbox{\Hypertarget{set__target__client_8py_a0af923c243307622a91d2e71d37bbf11}\label{set__target__client_8py_a0af923c243307622a91d2e71d37bbf11}} 
+int {\bfseries set\+\_\+target\+\_\+client.\+first\+\_\+start} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Action server that allows the user to set a target point or to cancel it. 
+
+\begin{DoxyAuthor}{Author}
+Annika Delucchi 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+9/03/2024
+\end{DoxyDate}
+Subscribes to\+: ~\newline
+ ° /odom\+: topic to get the actual position and velocity of the robot
+
+Publishes to\+: ~\newline
+ ° /pos\+\_\+vel\+: custom message containing the actual position and velocity of the robot
+
+Services\+: ~\newline
+ ° None 

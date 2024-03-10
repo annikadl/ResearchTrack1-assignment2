@@ -1,0 +1,42 @@
+\hypertarget{info__service_8py}{}\doxysection{scripts/info\+\_\+service.py File Reference}
+\label{info__service_8py}\index{scripts/info\_service.py@{scripts/info\_service.py}}
+
+
+Service node that subscribes to the robot\textquotesingle{}s position and velocity (using the custom message) and implements a server to retrieve the distance of the robot from the target and the robot\textquotesingle{}s average speed.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{info__service_8py_a93bf3b9a801fda070df012b3fd1c6b8a}\label{info__service_8py_a93bf3b9a801fda070df012b3fd1c6b8a}} 
+def {\bfseries info\+\_\+service.\+get\+\_\+distance\+\_\+and\+\_\+averagevelocity} (msg)
+\item 
+\mbox{\Hypertarget{info__service_8py_ad315c9610fbe13d85904aa3b3f240573}\label{info__service_8py_ad315c9610fbe13d85904aa3b3f240573}} 
+def {\bfseries info\+\_\+service.\+get\+\_\+values} (s)
+\item 
+\mbox{\Hypertarget{info__service_8py_a432bccfb09d7df31c450bfc156d07862}\label{info__service_8py_a432bccfb09d7df31c450bfc156d07862}} 
+def {\bfseries info\+\_\+service.\+info\+\_\+service\+\_\+main} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Service node that subscribes to the robot\textquotesingle{}s position and velocity (using the custom message) and implements a server to retrieve the distance of the robot from the target and the robot\textquotesingle{}s average speed. 
+
+\begin{DoxyAuthor}{Author}
+Annika Delucchi 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+9/03/2024
+\end{DoxyDate}
+Subscribes to\+: ~\newline
+ ° /pos\+\_\+vel\+: custom message containing the actual position and velocity of the robot
+
+Publishes to\+: ~\newline
+ ° None ~\newline
+
+
+Services\+: ~\newline
+ ° /info\+\_\+service\+: service to get the distance of the robot from the target and the robot\textquotesingle{}s average speed 

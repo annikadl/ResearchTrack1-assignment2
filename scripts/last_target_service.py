@@ -1,11 +1,11 @@
-## @assignment_2_2023 last_target_service.py
-# /file last_target_service.py
-# /brief This node implements a service that, when called, returns the values of the last target sent by the user.
-# /author Annika Delucchi
-# /version 1.0
-# /date    9/03/2024
+## @package assignment_2_2023 
+# \file last_target_service.py
+# \brief Service that returns the values of the last target sent by the user.
+# \author Annika Delucchi
+# \version 1.0
+# \date    9/03/2024
 #
-# /details
+# \details
 #
 # Subscribes to: <BR>
 #    ° /pos_vel: custom message containing the actual position and velocity of the robot
@@ -55,6 +55,7 @@ the user run the command rosservice call /last_target on the terminal.
 """
 
 
+
 import rospy
 import assignment_2_2023.msg
 from assignment_2_2023.msg import Vel
@@ -68,6 +69,9 @@ def get_last_target(msg):
 
     # get last target from ros parameters. 
     # they have been updated when the last target was entered by the user
+    ## @param des_pos_x: Desired x-coordinate for the robot's position.
+    ## @param des_pos_y: Desired y-coordinate for the robot's position.
+
     last_des_x = rospy.get_param('/des_pos_x')
     last_des_y = rospy.get_param('/des_pos_y')
     
@@ -105,6 +109,10 @@ if __name__ == "__main__":
     last_target_service()
     
     
+
+
+
+
 
 
 

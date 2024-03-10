@@ -1,5 +1,6 @@
-## @assignment_2_2023 set_target_client
-# \brief This is the action server that allows the user to set a target point or to cancel it
+## @package assignment_2_2023
+# \file set_target_client.py
+# \brief Action server that allows the user to set a target point or to cancel it
 # \author Annika Delucchi
 # \version 1.0
 # \date    9/03/2024
@@ -14,8 +15,6 @@
 #
 # Services: <BR>
 #    ° None
-
-
 
 
 #!/usr/bin/env python
@@ -54,7 +53,9 @@ from actionlib_msgs.msg import GoalStatus
 pub = None
 first_start = 0
 
-###### PUBLISHER
+# \brief This function is the callback of the subscriber to the topic /odom. It takes the actual position and velocity of the robot and publishes them as a custom message.
+# \param msg is the message received from the topic /odom
+# \return None
 def publisher_node(msg):
     # Create a publisher
     global pub
@@ -78,7 +79,9 @@ def publisher_node(msg):
     # rate = rospy.Rate(0.1)  # 1 Hz
 
 
-####### CLIENT
+# \brief This function implements an action client, which also provides a user interface, running on a separate terminal, to let the user choose from the terminal either to: set a new target point that the robot must reach andcancel the goal previously chosen.
+# \param None
+# \return None
 def parameters_client_main():
     #global reached
     global first_start
