@@ -17,53 +17,51 @@ Furthermore, this service is run by the launch file; to call it and get the last
 the user run the command rosservice call /last_target on the terminal.
 """
 
-
 import rospy
 import assignment_2_2023.msg
 from assignment_2_2023.msg import Vel
 from assignment_2_2023.srv import Last_target, Last_targetResponse
 
-
 def get_last_target(msg):
+    """
+    Callback function for the subscriber to the topic /pos_vel.
+    
+    :param msg: custom message containing the actual position and velocity of the robot
+    :type msg: assignment_2_2023.msg.Vel
+    """
     global last_des_x, last_des_y
 
-    # get last target from ros parameters. 
-    # they have been updated when the last target was entered by the user
     last_des_x = rospy.get_param('/des_pos_x')
     last_des_y = rospy.get_param('/des_pos_y')
-    
-    #print("Last input target is des_x = %f, des_y = %f" % (last_des_x, last_des_y))
-    
-    
+
 def result_callback(s):
+    """
+    Callback function for the service /last_target. It returns the last target entered by the user.
+    
+    :param s: service request
+    :type s: assignment_2_2023.srv.Last_targetRequest
+    :return: service response containing the last target entered by the user
+    :rtype: assignment_2_2023.srv.Last_targetResponse
+    """
     global last_des_x, last_des_y 
     
-    # store last target
     response = Last_targetResponse()
     response.last_target_x = last_des_x
     response.last_target_y = last_des_y
     
     return response
-    	    
 
 def last_target_service():
+    """
+    Initializes the node last_target_service.
+    """
     rospy.init_node('last_target_service')
     rospy.loginfo("Last target node initialized")
 
-    # SUBSCRIBER: Subscribe to the correct action goal topic
     rospy.Subscriber("/pos_vel", Vel, get_last_target)
-    
-    # SERVICE: Service to get the last target. It uses Last_target service type
     service = rospy.Service('last_target', Last_target, result_callback)
     
     rospy.spin()
 
 if __name__ == "__main__":
     last_target_service()
-    
-    
-
-
-
-
-
