@@ -36,8 +36,7 @@
 # The publisher_node() function is used to create and publish a custom message containing 
 # the actual position (x,y) and velocity (linear, angular) of the robot. This function 
 # represents the callback of a subscriber, which takes the required information subscribing to the topic `odom`.
-
-
+ 
 
 #!/usr/bin/env python
 
