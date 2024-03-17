@@ -26,15 +26,18 @@ Set Target Client Module
 ========================
 .. automodule:: scripts.set_target_client
    :members:
+   :show-inheritance:
 
 Last Target Service Module
 ==========================
 .. automodule:: scripts.last_target_service
    :members:
+   :show-inheritance:
 
 
 Info Service Module
 ===================
 .. automodule:: scripts.info_service
    :members:  
+   :show-inheritance:
 
