@@ -4,29 +4,21 @@
    :platform: Unix
    :synopsis: Python module for the assignment_2_2023
 .. moduleauthor:: Annika Delucchi
-"""
+  
+Description:
+    This module implements a ROS node that provides a service to retrieve the distance from the goal and the average velocity of the robot.
+    To make it feasible, a service file `info_service.srv` is created in the package directory, defining the expected service response type.
+    The subscriber implemented in this node's callback function extracts the target position from ROS parameters and the actual position from the custom message sent by `set_target_client.py`. The distance is computed as the Euclidean distance using the Python built-in function `math.dist(des_coordinates, actual_coordinates)`.
+    The velocity values are also extracted from the custom message, collected in a list of dimension `window_size` with a default value of 10 (modifiable in the launch file). The average velocity is then computed as `average_vel_x = sum(vel_data) / min(len(vel_data), velocity_window_size)`.
+    These computed values compose the response of the service.
+    The `info_service.py` module is run by the launch file, and the service can be called using the command `rosservice call /info_service` in the terminal.
 
+    
+Service:
+    /info_service
 
-"""
-info_service,py is a node implementing a service that, when called, returns the distance from
-the goal and the average velocity of the robot. 
-
-To make it feasible, a srv file info_service.srv is created in the so-called directory; it
-contains the expected service response type. 
-
-A subscriber is implemented and its callback takes the target position from the ros parameters
-and the actual one from the custom message sent by the set_target_client.py. The distance is
-computed as the Euclidean distance by using the Python built-in function
-math.dist(des_coordinates, actual coordinates) by importing math library. 
-The velocity values are extracted by the custom message too, they are collected in a list of
-dimension window_size with a default value of 10 (that can be modified in the launch file).
-Then the average velocity is computed as average_vel_x = sum(vel_data) / min(len(vel_data),
-velocity_window_size). These values compose the response of the service.
-
-info_service.py is run by the launch file and the service can be called by using the command
-rosservice call /info_service on the terminal.
-
-
+Subscriber:
+    /pos_vel
 """
 
 import rospy
@@ -38,12 +30,18 @@ from assignment_2_2023.msg import Vel
 from actionlib_msgs.msg import GoalStatusArray
 from assignment_2_2023.srv import info_service, info_serviceResponse
 
-# Service node thatsubscribes to the robot's position and velocity (using the custom message)
-# and implements a server to retrieve the distance of the robot from the target and the robot's
-# average speed.
-
-
 def get_distance_and_averagevelocity(msg):
+    """
+    Callback function for the subscriber to the topic /pos_vel.
+    
+    :param msg: custom message containing the actual position and velocity of the robot
+    :param des_pos_x: desired position x
+    :param des_pos_y: desired position y
+    :type des_pos_x: float
+    :type des_pos_y: float
+    :param window_size: size of the window for the average velocity
+    :type msg: assignment_2_2023.msg.Vel
+    """
     global success, average_vel_x, distance
 
     # desired position 
@@ -67,17 +65,24 @@ def get_distance_and_averagevelocity(msg):
 
     average_vel_x = sum(vel_data) / min(len(vel_data), velocity_window_size)
 
-    #rospy.loginfo("Average velocity: %f", average_vel_x)
-    
-        
 def get_values(s):      
+    """
+    Callback function for the service /info_service. Returns the distance from the goal and the average velocity of the robot.
+    
+    :param s: service request
+    :type s: assignment_2_2023.srv.info_serviceRequest
+    :return: service response containing the distance from the goal and the average velocity of the robot
+    :rtype: assignment_2_2023.srv.info_serviceResponse
+    """
     global average_vel_x, distance
     
     rospy.loginfo("Distance= %f Average velocity = %f", distance, average_vel_x)
     return info_serviceResponse(distance, average_vel_x)	
-    		      
 
 def info_service_main():
+    """
+    Initializes the node info_service.
+    """
     global velocity_window_size
 
     rospy.init_node('info_service')
@@ -96,4 +101,3 @@ def info_service_main():
 
 if __name__ == "__main__":
     info_service_main()
-	

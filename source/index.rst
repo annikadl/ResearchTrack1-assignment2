@@ -21,17 +21,20 @@ assignment_2_2023 documentation!
 ********************************
 This is the documentation of the assignment_2_2023 package!
 
-assignment_2_2023 Module
-===========================
+
+Set Target Client Module
+========================
 .. automodule:: scripts.set_target_client
    :members:
-   
-assignment_2_2023 Module
-===========================
+
+Last Target Service Module
+==========================
 .. automodule:: scripts.last_target_service
    :members:
-   
-assignment_2_2023 Module
-===========================
+
+
+Info Service Module
+===================
 .. automodule:: scripts.info_service
-   :members:      
+   :members:  
+

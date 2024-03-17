@@ -4,26 +4,22 @@
    :platform: Unix
    :synopsis: Python module for the assignment_2_2023
 .. moduleauthor:: Annika Delucchi
-"""
 
+Description:
+    This module implements an action client for setting target points and cancelling goals in the assignment_2_2023 package. It also publishes the robot's position and velocity as a custom message.
+    It provides the following functions:
+    - :func:`publisher_node`: Callback function for the subscriber to the topic /odom.
+    - :func:`parameters_client_main`: Implements an action client with a user interface for setting new target points or cancelling previous goals.
+    - :func:`main`: Entry point of the module.
 
-"""
-This is the action server that satisfies the request: implement an action client, 
-allowing the user to set a target point or to cancel it (this node also uses the 
-status of the goal to know when the target has been reached); 
-this node also publishes robot position and velocity as a custom message.
+Action Client:
+    /reaching_goal
 
-It implements different functions.
+Publisher:
+    /pos_vel
 
-set_client_parameters() implements an action client, which also provides a user 
-interface, running on a separate terminal, to let the user choose from the terminal either to:
-* set a new target point that the robot must reach.
-* cancel the goal previously chosen.
-
-The publisher_node() function is used to create and publish a custom message containing 
-the actual position (x,y) and velocity (linear, angular) of the robot. This function 
-represents the callback of a subscriber, which takes the required information subscribing to the topic `odom`.
-
+Subscriber:
+    /odom 
 """
 
 import rospy
@@ -67,6 +63,12 @@ def parameters_client_main():
     Implements an action client, which also provides a user interface, running on a separate terminal, 
     to let the user choose from the terminal either to set a new target point that the robot must reach 
     or to cancel the goal previously chosen.
+
+    :param des_pos_x: desired position x
+    :param des_pos_y: desired position y
+    :type des_pos_x: float
+    :type des_pos_y: float
+    
     """
     global first_start
 
@@ -123,6 +125,9 @@ def parameters_client_main():
             rospy.loginfo("Invalid input")
 
 def main():
+    """
+    Initializes the set_target_client node, sets up publishers and subscribers, and runs the action client.
+    """
     rospy.init_node('set_target_client')
 
     global pub

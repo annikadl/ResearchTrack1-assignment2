@@ -5,28 +5,18 @@
    :synopsis: Python module for the assignment_2_2023
 .. moduleauthor:: Annika Delucchi
 
+Description:
+    This module implements a ROS node that provides a service to retrieve the values of the last target sent by the user. 
+    To make it feasible, a service file `Last_target.srv` is created in the package directory, defining the expected service response type. 
+    The last target values are extracted from the ROS parameters updated by `set_target_client.py` and returned as a response from the service. 
+    If the service is called before the user sets a target, the response provides default values (`/des_pos_x = 0.0` and `/des_pos_y = 1.0`) chosen in the launch file `assignment1.launch`.
+    Furthermore, this service is launched by a ROS launch file. To call it and retrieve the last target sent by the user, run the command ``rosservice call /last_target`` in the terminal.
+
 Service: 
-    last_target
+    /last_target
+
 Subscriber:
     /pos_vel    
-"""
-
-
-"""
-last_target_service.py is a node implementing a service that, when called, returns 
-the values of the last target sent by the user. 
-
-To make it feasible, a srv file Last_target.srv is created in the so-called directory; it
-contains the expected service response type. 
-
-The last target values are extracted from the ros parameters updated from the
-set_target_client,py and returned as response from the service. 
-
-If the service is called before the user sets a target, the response gives the default
-values(/des_pos_x = 0.0 and des_pos_y = 1.0) chosen in the launch file assignment1.launch.
-
-Furthermore, this service is run by the launch file; to call it and get the last target sent by
-the user run the command rosservice call /last_target on the terminal.
 """
 
 import rospy
@@ -39,6 +29,10 @@ def get_last_target(msg):
     Callback function for the subscriber to the topic /pos_vel.
     
     :param msg: custom message containing the actual position and velocity of the robot
+    :param des_pos_x: desired position x
+    :param des_pos_y: desired position y
+    :type des_pos_x: float
+    :type des_pos_y: float
     :type msg: assignment_2_2023.msg.Vel
     """
     global last_des_x, last_des_y
