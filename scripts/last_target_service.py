@@ -1,4 +1,16 @@
 #!/usr/bin/env python
+"""
+.. module:: last_target_service
+   :platform: Unix
+   :synopsis: Python module for the assignment_2_2023
+.. moduleauthor:: Annika Delucchi
+
+Service: 
+    last_target
+Subscriber:
+    /pos_vel    
+"""
+
 
 """
 last_target_service.py is a node implementing a service that, when called, returns 

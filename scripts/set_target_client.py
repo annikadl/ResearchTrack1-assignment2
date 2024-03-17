@@ -1,4 +1,11 @@
 #!/usr/bin/env python
+"""
+.. module:: set_target_client
+   :platform: Unix
+   :synopsis: Python module for the assignment_2_2023
+.. moduleauthor:: Annika Delucchi
+"""
+
 
 """
 This is the action server that satisfies the request: implement an action client, 

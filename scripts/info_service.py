@@ -1,4 +1,11 @@
 #!/usr/bin/env python
+"""
+.. module:: info_service
+   :platform: Unix
+   :synopsis: Python module for the assignment_2_2023
+.. moduleauthor:: Annika Delucchi
+"""
+
 
 """
 info_service,py is a node implementing a service that, when called, returns the distance from
