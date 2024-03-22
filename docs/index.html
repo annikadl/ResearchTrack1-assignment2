@@ -46,10 +46,12 @@
               <!-- Local TOC -->
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Welcome to assignment_2_2023’s documentation!</a></li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a><ul>
-<li><a class="reference internal" href="#assignment-2-2023-documentation">assignment_2_2023 documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#assignment-2-2023-documentation">assignment_2_2023 documentation!</a><ul>
+<li><a class="reference internal" href="#already-implemented-nodes">Already implemented nodes</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#my-contribution">My contribution</a><ul>
 <li><a class="reference internal" href="#module-scripts.set_target_client">Set Target Client Module</a><ul>
 <li><a class="reference internal" href="#scripts.set_target_client.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 <li><a class="reference internal" href="#scripts.set_target_client.parameters_client_main"><code class="docutils literal notranslate"><span class="pre">parameters_client_main()</span></code></a></li>
@@ -66,6 +68,8 @@
 <li><a class="reference internal" href="#scripts.info_service.get_distance_and_averagevelocity"><code class="docutils literal notranslate"><span class="pre">get_distance_and_averagevelocity()</span></code></a></li>
 <li><a class="reference internal" href="#scripts.info_service.get_values"><code class="docutils literal notranslate"><span class="pre">get_values()</span></code></a></li>
 <li><a class="reference internal" href="#scripts.info_service.info_service_main"><code class="docutils literal notranslate"><span class="pre">info_service_main()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -103,18 +107,61 @@
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
 <blockquote>
 <div><ul class="simple">
-<li><p>:ref:genindex</p></li>
-<li><p>:ref:modindex</p></li>
-<li><p>:ref:search</p></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 </div></blockquote>
+</section>
 <section id="assignment-2-2023-documentation">
-<h2>assignment_2_2023 documentation!<a class="headerlink" href="#assignment-2-2023-documentation" title="Permalink to this heading"></a></h2>
-<p>This is the documentation of the assignment_2_2023 package!</p>
+<h1>assignment_2_2023 documentation!<a class="headerlink" href="#assignment-2-2023-documentation" title="Permalink to this heading"></a></h1>
+<p>This is the documentation of the assignment_2_2023 package!
+This package was developed to fulfil the requirements for the the second
+assignment for the Research Track 1 exam for the Robotics Engineering
+Master’s degree at the University of Genoa.</p>
+<p>The assignment takes place in Gazebo, a 3D ROS simulator.
+The Rviz tool is also used to provide a model of the simulator robot,
+including sensors, to help the user debug the robot application.
+To run the environment check the ReadMe file of the package repository
+on github at the following link: <a class="reference external" href="https://github.com/annikadl/ResearchTrack1-assignment2">https://github.com/annikadl/ResearchTrack1-assignment2</a></p>
+<section id="already-implemented-nodes">
+<h2>Already implemented nodes<a class="headerlink" href="#already-implemented-nodes" title="Permalink to this heading"></a></h2>
+<p>Some nodes were already implemented by the Professor of the course.
+These nodes aim to plan the motion of the robot.</p>
+<dl class="simple">
+<dt>Node wall_follow_service.py</dt><dd><p>is used to let the robot follow a wall. This node also processes data to
+detect obstacles and avoid them: if an obstacle is detected on the
+front, the node makes the robot rotate until there are no obstacles
+perceived. The same behaviour is implemented for obstacles on the
+right and the left.</p>
+</dd>
+<dt>Node go_to_point_service_service.py</dt><dd><p>implements a finite state machine
+that controls whether the robot behaves correctly and lets it move
+towards a specified point. It also checks if and when the robot
+successfully reaches the goal.</p>
+</dd>
+<dt>Node bug_as.py</dt><dd><p>implements an action server used to decide the robot’s
+behaviour according to a function change_state, responsible for
+switching the robot states. This function lets activate or deactivate
+specific behaviour such as go_to_point or wall_following. Besides, it
+imports messages and services communication between different components
+of the simulation system.
+These include messages for laser scan data, odometry information, twist
+commands for velocity control, and services for switching between
+navigation modes. Callback functions are implemented to process data,
+updating the robot’s position and orientation. The planning function is
+used as a callback for the action server, implementing the robot’s
+goal-planning behaviour. It considers obstacles in the environment.</p>
+</dd>
+</dl>
 </section>
 </section>
+<section id="my-contribution">
+<h1>My contribution<a class="headerlink" href="#my-contribution" title="Permalink to this heading"></a></h1>
+<p>The assignment requires handling long-running tasks: until now, when the
+robot is moving the user cannot do anything.</p>
 <section id="module-scripts.set_target_client">
-<span id="set-target-client-module"></span><h1>Set Target Client Module<a class="headerlink" href="#module-scripts.set_target_client" title="Permalink to this heading"></a></h1>
+<span id="set-target-client-module"></span><h2>Set Target Client Module<a class="headerlink" href="#module-scripts.set_target_client" title="Permalink to this heading"></a></h2>
 <span class="target" id="module-set_target_client"></span><p><em>Module author: Annika Delucchi</em></p>
 <dl class="simple">
 <dt>Description:</dt><dd><p>This module implements an action client for setting target points and cancelling goals in the assignment_2_2023 package. It also publishes the robot’s position and velocity as a custom message.
@@ -130,6 +177,7 @@ It provides the following functions:
 <dt>Subscriber:</dt><dd><p>/odom</p>
 </dd>
 </dl>
+<p><strong>Functions</strong>:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="scripts.set_target_client.main">
 <span class="sig-prename descclassname"><span class="pre">scripts.set_target_client.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/set_target_client.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.set_target_client.main" title="Permalink to this definition"></a></dt>
@@ -166,7 +214,7 @@ It takes the actual position and velocity of the robot and publishes them as a c
 
 </section>
 <section id="module-scripts.last_target_service">
-<span id="last-target-service-module"></span><h1>Last Target Service Module<a class="headerlink" href="#module-scripts.last_target_service" title="Permalink to this heading"></a></h1>
+<span id="last-target-service-module"></span><h2>Last Target Service Module<a class="headerlink" href="#module-scripts.last_target_service" title="Permalink to this heading"></a></h2>
 <span class="target" id="module-last_target_service"></span><p><em>Module author: Annika Delucchi</em></p>
 <dl class="simple">
 <dt>Description:</dt><dd><p>This module implements a ROS node that provides a service to retrieve the values of the last target sent by the user.
@@ -180,6 +228,7 @@ Furthermore, this service is launched by a ROS launch file. To call it and retri
 <dt>Subscriber:</dt><dd><p>/pos_vel</p>
 </dd>
 </dl>
+<p><strong>Functions</strong>:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="scripts.last_target_service.get_last_target">
 <span class="sig-prename descclassname"><span class="pre">scripts.last_target_service.</span></span><span class="sig-name descname"><span class="pre">get_last_target</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/last_target_service.html#get_last_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.last_target_service.get_last_target" title="Permalink to this definition"></a></dt>
@@ -220,7 +269,7 @@ Furthermore, this service is launched by a ROS launch file. To call it and retri
 
 </section>
 <section id="module-scripts.info_service">
-<span id="info-service-module"></span><h1>Info Service Module<a class="headerlink" href="#module-scripts.info_service" title="Permalink to this heading"></a></h1>
+<span id="info-service-module"></span><h2>Info Service Module<a class="headerlink" href="#module-scripts.info_service" title="Permalink to this heading"></a></h2>
 <span class="target" id="module-info_service"></span><p><em>Module author: Annika Delucchi</em></p>
 <dl class="simple">
 <dt>Description:</dt><dd><p>This module implements a ROS node that provides a service to retrieve the distance from the goal and the average velocity of the robot.
@@ -235,6 +284,7 @@ The <cite>info_service.py</cite> module is run by the launch file, and the servi
 <dt>Subscriber:</dt><dd><p>/pos_vel</p>
 </dd>
 </dl>
+<p><strong>Functions</strong>:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="scripts.info_service.get_distance_and_averagevelocity">
 <span class="sig-prename descclassname"><span class="pre">scripts.info_service.</span></span><span class="sig-name descname"><span class="pre">get_distance_and_averagevelocity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/info_service.html#get_distance_and_averagevelocity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.info_service.get_distance_and_averagevelocity" title="Permalink to this definition"></a></dt>
@@ -274,6 +324,7 @@ The <cite>info_service.py</cite> module is run by the launch file, and the servi
 <dd><p>Initializes the node info_service.</p>
 </dd></dl>
 
+</section>
 </section>
 
 

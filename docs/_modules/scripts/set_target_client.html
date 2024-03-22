@@ -91,6 +91,9 @@
 
 <span class="sd">Subscriber:</span>
 <span class="sd">    /odom </span>
+
+<span class="sd">**Functions**: </span>
+<span class="sd">     </span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">rospy</span>
@@ -151,6 +154,10 @@
 
         <span class="n">command</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;What do you want to do?: &quot;</span><span class="p">)</span>
 
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; The goal position is extracted from assignment_2_2023.msg.PlanningGoal().</span>
+<span class="sd">        The type of the goal is specified by the Planning.action action file, which, indeed, </span>
+<span class="sd">        defines the types of the goal that the action client sends to the action servers and the</span>
+<span class="sd">         result and feedback that the action server sends back to the client. &quot;&quot;&quot;</span>
         <span class="n">goal</span> <span class="o">=</span> <span class="n">assignment_2_2023</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">PlanningGoal</span><span class="p">()</span>
         <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s1">&#39;/des_pos_x&#39;</span><span class="p">)</span>
         <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s1">&#39;/des_pos_y&#39;</span><span class="p">)</span>

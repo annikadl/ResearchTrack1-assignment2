@@ -20,6 +20,9 @@ Publisher:
 
 Subscriber:
     /odom 
+
+**Functions**: 
+     
 """
 
 import rospy
@@ -80,6 +83,10 @@ def parameters_client_main():
 
         command = input("What do you want to do?: ")
 
+        """ The goal position is extracted from assignment_2_2023.msg.PlanningGoal().
+        The type of the goal is specified by the Planning.action action file, which, indeed, 
+        defines the types of the goal that the action client sends to the action servers and the
+         result and feedback that the action server sends back to the client. """
         goal = assignment_2_2023.msg.PlanningGoal()
         goal.target_pose.pose.position.x = rospy.get_param('/des_pos_x')
         goal.target_pose.pose.position.y = rospy.get_param('/des_pos_y')
