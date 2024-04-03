@@ -9,4 +9,5 @@
     <node pkg="assignment_2_2023" type="bug_as.py" name="bug_action_service" output="screen" />
     <node pkg="assignment_2_2023" type="last_target_service.py" name="last_target_service" />
     <node pkg="assignment_2_2023" type="info_service.py" name="info_service" />
+
 </launch>

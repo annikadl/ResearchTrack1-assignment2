@@ -23,6 +23,9 @@ import assignment_2_2023.msg
 from assignment_2_2023.msg import Vel
 from assignment_2_2023.srv import Last_target, Last_targetResponse
 
+# Initialize global variables
+last_des_x = rospy.get_param('/des_pos_x')
+last_des_y = rospy.get_param('/des_pos_y')
 
 def get_last_target(msg):
     global last_des_x, last_des_y
