@@ -1,7 +1,7 @@
 # ResearchTrack1-assignment2
 This is the second assignment for the Research Track 1 exam for the Robotics Engineering Master's degree at the University of Genoa.
 
-The Sphinx documentation of this project is available at [https://annikadl.github.io/ResearchTrack1-assignment2/].
+The Sphinx documentation of this project is available at https://annikadl.github.io/ResearchTrack1-assignment2/.
 
 If you prefer Doxygen documentation, move to the proper branch: it contains all the necessary files to generate it.  
 
